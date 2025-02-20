@@ -7,6 +7,7 @@ struct State {
     ball_velocity: Vec2,
     paddle_position: Vec2,
     score: u32,
+    paused: bool,
 }
 
 // Chuot coordinate system is: (0,0) in the center, Y+ points down
@@ -27,6 +28,10 @@ const KEY_MAP: [(Vec2, [KeyCode; 3]); 4] = [
 impl Game for State {
     /// Update the game, handle input, move enemies, etc.
     fn update(&mut self, ctx: Context) {
+        // pause
+        if ctx.key_pressed(KeyCode::Space) {self.paused = !self.paused}
+        if self.paused {return}
+
         let elapsed = ctx.delta_time();
 
         // paddles
@@ -110,6 +115,7 @@ fn main() {
         ball_velocity: BALL_VELOCITY,
         paddle_position: Vec2::new(0.0, 0.0),
         score: 0,
+        paused: false
     };
 
   let engine_config = Config{

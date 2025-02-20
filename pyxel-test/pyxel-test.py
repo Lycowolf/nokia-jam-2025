@@ -29,6 +29,24 @@ PAUSED = False
 
 pyxel.init(D_WIDTH, D_HEIGHT, display_scale=6, fps=60)
 
+tone = pyxel.Tone()
+tone.gain = 2.0
+tone.noise = 0
+# Waveform is approximation (mostly by ear) of how the 3310 sounds
+# TODO: do a FFT of a real sound, synthesize it and sample it at 32 points
+tone.waveform.from_list([15, 2, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7])
+tones = [tone]
+pyxel.tones.from_list(tones)
+
+pyxel.sounds[0].set(
+    #"f3c3e3c3a2a2a2",
+    "c3e3g3",
+    "t",
+    "7",
+    "n",
+    5
+)
+
 def signum(x):
     if x < 0:
         return -1
@@ -80,6 +98,11 @@ def update_paddles():
         if pyxel.btn(key):
             PADDLE_Y += +PADDLE_SPEED
 
+def score():
+    global SCORE
+    SCORE += 1
+    pyxel.play(0, snd=0)
+
 
 def update_ball(): # TODO: refactor: use vectors for everything
     global BALL_X, BALL_Y, BALL_VEL_X, BALL_VEL_Y, SCORE
@@ -89,12 +112,12 @@ def update_ball(): # TODO: refactor: use vectors for everything
         coord = line_collision(BALL_X, BALL_VEL_X, 0)
         if coord:
             if intervals_intersect(BALL_Y, BALL_Y + BALL_SIZE, PADDLE_Y, PADDLE_Y + PADDLE_SIZE):
-                SCORE += 1
+                score()
             BALL_X = 0 + coord
         coord = line_collision(BALL_X + BALL_SIZE, BALL_VEL_X, D_WIDTH)
         if coord:
             if intervals_intersect(BALL_Y, BALL_Y + BALL_SIZE, PADDLE_Y, PADDLE_Y + PADDLE_SIZE):
-                SCORE += 1
+                score()
             BALL_X = D_WIDTH - BALL_SIZE + coord
         BALL_VEL_X = -BALL_VEL_X
     if 0 - BALL_VEL_Y <= BALL_Y <= D_HEIGHT - BALL_SIZE - BALL_VEL_Y:  # no bounce
@@ -103,12 +126,12 @@ def update_ball(): # TODO: refactor: use vectors for everything
         coord = line_collision(BALL_Y, BALL_VEL_Y, 0)
         if coord:
             if intervals_intersect(BALL_X, BALL_X + BALL_SIZE, PADDLE_X, PADDLE_X + PADDLE_SIZE):
-                SCORE += 1
+                score()
             BALL_Y = 0 + coord
         coord = line_collision(BALL_Y + BALL_SIZE, BALL_VEL_Y, D_HEIGHT)
         if coord:
             if intervals_intersect(BALL_X, BALL_X + BALL_SIZE, PADDLE_X, PADDLE_X + PADDLE_SIZE):
-                SCORE += 1
+                score()
             BALL_Y = D_HEIGHT - BALL_SIZE + coord
         BALL_VEL_Y = -BALL_VEL_Y
     #print(f"BALL: {BALL_X}:{BALL_Y} {BALL_VEL_X}:{BALL_VEL_Y}")
