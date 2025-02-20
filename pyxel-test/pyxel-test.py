@@ -39,11 +39,10 @@ tones = [tone]
 pyxel.tones.from_list(tones)
 
 pyxel.sounds[0].set(
-    #"f3c3e3c3a2a2a2",
     "c3e3g3",
-    "t",
+    "t", # t is the first one (the one we overrode)
     "7",
-    "n",
+    "n", # the only effect Nokia 3310 realistically can do is none
     5
 )
 
