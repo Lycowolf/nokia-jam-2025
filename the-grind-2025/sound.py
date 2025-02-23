@@ -19,3 +19,4 @@ def play(notes: str, speed: int):
         "n", # the only effect Nokia 3310 realistically can do is none
         speed
     )
+    pyxel.play(0, 0)

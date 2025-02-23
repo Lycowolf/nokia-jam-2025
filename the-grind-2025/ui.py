@@ -2,8 +2,13 @@ import pyxel
 from constants import *
 import re
 
-WORD_RE = re.compile(r"[^ ]+ *")
+WORD_RE = re.compile(r"[^ \uE020]+[ \uE020]*") # E020 is inverted space
 font = pyxel.Font(FONT)
+
+def switch_palette(name: str):
+    """switch palette. If it doesn't exist, do nothing"""
+    if name in PALETTES:
+        pyxel.load(f"assets/palettes/{name}.pyxres", True, True, True, True) # load only palette
 
 def draw_text_row(row, text: str, color: int = 1, x_off: int = 0):
     """

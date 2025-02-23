@@ -1,5 +1,7 @@
 import pyxel
 from typing import Self, Callable
+
+import ui
 from input import Map
 from ui import draw_wrapped_text, prepare_smart_text, invert_text, draw_text_row
 from constants import *
@@ -7,7 +9,7 @@ from input import btnp
 import sound
 
 class Screen:
-    # Screens form a state machine. update() method updates self as necessary and returns a Screen to be displayed
+    # Screens form a state machine. update() method updates self as necessary and returns a Screen to switch to
     # (which can be self).
     def update(self) -> Self:
         pass
@@ -19,12 +21,16 @@ class Screen:
 class Menu(Screen):
     intro_text = "The Player chose a(n) {} palette and {} the game."
     known_words = {"original", "harsh", "gray", "looked at", "started"}
-    words = ["gray", "looked at"]
+    words = ["original", "looked at"]
     frame = 0
+
+    def __init__(self):
+        ui.switch_palette(self.words[0])
 
     def update(self) -> Screen:
         def on_word_selected(word):
             self.words[0] = word
+            ui.switch_palette(word)
             sound.play("c3e3g3", 8)
 
         self.frame = (self.frame + 1) % FPS
@@ -86,3 +92,11 @@ class WordMenu(Screen):
             else:
                 word = self.words[word_idx]
             draw_text_row(i, word)
+
+class Victory(Screen):
+    def update(self) -> Self:
+        return self
+
+    def draw(self):
+        pyxel.cls(0)
+        ui.draw_text_row(MIDDLE_ROW, "You win!", 1)

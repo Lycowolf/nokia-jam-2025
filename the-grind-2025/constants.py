@@ -5,6 +5,8 @@ SCREEN_H = 48
 DISPLAY_SCALE = 6
 FPS = 15
 
+PALETTES = {"original", "harsh", "gray"}
+
 # this font is special: Basic Latin (u0020 - u007F) glyphs/codepoints are copied to Private Use Area (uE020 - uE07F)
 # end black/white inverted
 FONT = "assets/simple-6px.bdf"
