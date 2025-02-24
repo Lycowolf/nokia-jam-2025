@@ -1,7 +1,7 @@
 from enum import Enum, auto
 from typing import Self
 import pyxel
-from ui import draw_wrapped_text, prepare_smart_text, invert_text, draw_text_row
+from ui import draw_wrapped_text, draw_text_row
 from input import btnp as pressed, Map
 from .search_menu import SearchMenuScreen
 from .item import ItemScreen
