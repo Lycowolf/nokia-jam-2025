@@ -1,8 +1,10 @@
 import pyxel
 from constants import *
 import re
+from collections.abc import Callable
 
-WORD_RE = re.compile(r"([^ \uE020]+)([ \uE020]*)") # E020 is inverted space
+WORD_RE = re.compile(r"(" + SMART_TEXT_MARKER + r"|" + NEWLINE_MARKER + r"|[^\s\uE020]+)([ \t\uE020]*)") # E020 is inverted space
+NEWLINE_MARKER_RE = re.compile(NEWLINE_MARKER)
 font = pyxel.Font(FONT)
 
 def switch_palette(name: str) -> None:
@@ -46,11 +48,18 @@ def invert_text_blink(text, uninvert_selected) -> str:
         out_text += chr(ord(c) + FONT_INVERTED_OFFSET)
     return out_text
 
-def draw_smart_text(text: str, words: list[str], known_words: set[str], selected: int, blink_phase: bool = False, scroll: int = 0) -> list[int]:
+def draw_smart_text(text: str,
+                    words: list[str],
+                    known_words: set[str],
+                    selected: int,
+                    blink_phase: bool = False,
+                    scroll: int = 0,
+                    draw_function: Callable[[int, str], None] = draw_text_row
+                    ) -> tuple[list[int], int]:
     """
     Replace markers with (inverted) words while checking they are known and draw the result, scrolling down by
     scroll lines The selected word will be inverted only if blink_phase == False.
-    Return the line numbers of every word (for use in scroll control).
+    Return the line numbers of every smart word and number of last row (for use in scroll control).
     """
     row_num = - scroll
     row_text = ""
@@ -59,6 +68,12 @@ def draw_smart_text(text: str, words: list[str], known_words: set[str], selected
     is_smart = False
 
     for match in re.finditer(WORD_RE, text):
+        if NEWLINE_MARKER_RE.match(match[1]):
+            draw_function(row_num, row_text)
+            row_text = ""
+            row_num += 1
+            continue
+
         next_word = match[0]
         if match[1] == SMART_TEXT_MARKER:
             is_smart = True
@@ -76,17 +91,40 @@ def draw_smart_text(text: str, words: list[str], known_words: set[str], selected
 
         try_text = row_text + next_word
         if font.text_width(try_text) > SCREEN_W:
-            draw_text_row(row_num, row_text)
+            draw_function(row_num, row_text)
             row_num += 1
             row_text = next_word
         else:
             row_text = try_text
-
         if is_smart:
             word_rows.append(row_num)
             is_smart = False
+
     # draw remaining text
-    draw_text_row(row_num, row_text)
+    draw_function(row_num, row_text)
     if is_smart:
         word_rows.append(row_num)
-    return word_rows
+    return word_rows, row_num
+
+# TODO: optimize this (e. g. memoize)
+def layout_smart_text(text: str, words: list[str]) -> tuple[list[int], int]:
+    """Runs draw_smart_text but doesn't draw anything, just returns the smart word row numbers"""
+    return draw_smart_text(text, words, set(words), 0, False, 0, lambda x, y: None)
+
+
+def words_on_screen(text: str, words: list[str], scroll: int) -> tuple[set[int], set[int], set[int], int]:
+    """
+    Lays out the smart text and returns the row where every smart word sits (and the number of the last inhabited row).
+    """
+    layout, max_row = layout_smart_text(text, words)
+    prev_row = set()
+    on_screen = set()
+    next_row = set()
+    for word_idx, row in enumerate(layout):
+        if row == scroll - 1:
+            prev_row.add(word_idx)
+        elif scroll <= row < scroll + TEXT_ROWS:
+            on_screen.add(word_idx)
+        elif row == scroll + TEXT_ROWS:
+            next_row.add(word_idx)
+    return prev_row, on_screen, next_row, max_row
