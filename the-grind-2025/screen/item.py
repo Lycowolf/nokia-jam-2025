@@ -11,7 +11,7 @@ class ItemScreen(Screen):
     def draw(self):
         pyxel.cls(0)
         draw_wrapped_text(self.text, 0)
-        draw_text_row(6, "...", x_off=75)
+        draw_text_row(6, "...", x_off=-3)
 
     def update(self):
         if pressed(Map.action) or pressed(Map.back):
