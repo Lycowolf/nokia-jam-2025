@@ -4,3 +4,4 @@ from .item import ItemScreen
 from .search_menu import SearchMenuScreen
 from .story import StoryScreen
 from .deduction import DeductionScreen
+from .victory import Victory
