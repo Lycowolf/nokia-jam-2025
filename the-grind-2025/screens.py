@@ -64,7 +64,7 @@ class SmartText(Screen):
 
         return self
 
-    def draw(self):
+    def draw(self) -> None:
         pyxel.cls(0)
         smart_word_rows = draw_smart_text(
             self.text,
@@ -88,16 +88,16 @@ class TitleScreen(SmartText):
             known_words = {"original", "harsh", "gray", "looked at", "started"}
         )
 
-    def update(self):
+    def update(self) -> Screen:
         new_state = super().update()
-        ui.switch_palette(self.words[0])
 
+        ui.switch_palette(self.words[0])
         if self.words[1] == "started":
             return Victory()
         else:
             return new_state
 
-    def draw(self):
+    def draw(self) -> None:
         super().draw()
 
 # TODO: scrolling markers
@@ -154,3 +154,4 @@ class Victory(Screen):
     def draw(self):
         pyxel.cls(0)
         ui.draw_text_row(MIDDLE_ROW, "    You win!", 1)
+        #ui.draw_smart_text("You win!", [], set(), 0)
