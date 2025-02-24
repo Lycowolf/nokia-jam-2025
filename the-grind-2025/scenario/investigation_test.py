@@ -49,6 +49,8 @@ def setup_scenario(skip_intro=False):
     ]
     build_deduction_links(deductions)
 
+    game_state.setup_game_state(screens, deductions)
+
     if skip_intro:
         return graph['1']
     else:
