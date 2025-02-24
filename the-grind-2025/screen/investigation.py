@@ -5,6 +5,7 @@ from ui import draw_wrapped_text, draw_text_row
 from input import btnp as pressed, Map
 from .search_menu import SearchMenuScreen
 from .item import ItemScreen
+import game_state
 
 from .base import Screen
 
@@ -27,6 +28,8 @@ keys = {
 
 
 class InvestigationScreen(Screen):
+    last = None
+
     def __init__(self, name, text, left=None, right=None, up=None, down=None, objects={}):
         self.name = name
         self.text = text
@@ -50,6 +53,8 @@ class InvestigationScreen(Screen):
         draw_text_row(6, exit_indicator, x_off=70)
 
     def update(self) -> Self:
+        game_state.last_investigation = self
+
         for way in Way.all():
             if self.exits[way] and pressed(keys[way]):
                 return self.exits[way]
@@ -59,6 +64,9 @@ class InvestigationScreen(Screen):
                 return ItemScreen(self, "Nothing to search here")
             else:
                 return SearchMenuScreen(self, self.objects)
+
+        if pressed(Map.switch):
+            return game_state.last_deduction
 
         return self
 
