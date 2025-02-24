@@ -16,12 +16,14 @@ class SearchMenuScreen(Screen):
 
     def draw(self):
         pyxel.cls(0)
+        draw_text_row(0, "Search ...", x_off=5)
+
         for i, (text, _) in enumerate(self.objects):
             # if i == self.current:
             #     text = invert_text(text)
-            draw_text_row(i, text, x_off=5)
+            draw_text_row(i+1, text, x_off=10)
 
-        draw_text_row(self.current, ">", x_off=1)
+        draw_text_row(self.current+1, ">", x_off=6)
 
 
 
