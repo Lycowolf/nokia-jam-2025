@@ -5,6 +5,7 @@ from input import btnp as pressed, Map
 from constants import SMART_TEXT_MARKER
 from .base import Screen
 from .word_menu import WordMenu
+from .victory import Victory
 import game_state
 
 class DeductionScreen(Screen):
@@ -33,10 +34,12 @@ class DeductionScreen(Screen):
 
     def on_word_selected(self, word):
         self.words[self.selected] = word
-        # TODO check case end
 
     def update(self) -> Self:
         game_state.last_deduction = self
+
+        if game_state.is_everything_solved():
+            return Victory()
 
         if pressed(Map.left):
             return self.prev

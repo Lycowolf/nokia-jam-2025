@@ -9,6 +9,8 @@ from ui import invert_text_blink, draw_text_row, draw_smart_text, layout_smart_t
 from constants import *
 from input import btnp
 import sound
+import game_state
+import scenario.investigation_test as case1
 
 class Screen(ABC):
     # Screens form a state machine. update() method updates self as necessary and returns a Screen to switch to
@@ -93,7 +95,8 @@ class TitleScreen(SmartText):
 
         ui.switch_palette(self.words[0])
         if self.words[1] == "started":
-            return Victory()
+            scenario = case1.setup_scenario()
+            return game_state.last_investigation
         else:
             return new_state
 
