@@ -5,7 +5,7 @@ from typing import Self, Callable
 from abc import ABC
 import ui
 from input import Map
-from ui import invert_text_blink, draw_text_row, draw_smart_text
+from ui import invert_text_blink, draw_text_row, draw_smart_text, layout_smart_text, words_on_screen
 from constants import *
 from input import btnp
 import sound
@@ -19,25 +19,45 @@ class Screen(ABC):
     def draw(self) -> None:
         pass
 
-# TODO: scrolling
-class Menu(Screen):
-    intro_text = "The Player chose a(n) {} palette and {} the game."
-    known_words = {"original", "harsh", "gray", "looked at", "started"}
-    words = ["original", "looked at"]
+class SmartText(Screen):
+    text: str
+    words: list[str]
+    known_words: set[str]
     frame = 0
-    selected_smart_word = 0
+    scroll = 0
+    selected_word_idx = 0
 
-    def __init__(self):
-        ui.switch_palette(self.words[0])
+    def __init__(self, text: str, words: list[str], known_words: set[str]):
+        self.text = text
+        self.words = words
+        self.known_words = known_words
+        ui.switch_palette(self.words[0]) # TODO
 
     def update(self) -> Screen:
         self.frame = (self.frame + 1) % FPS
         def on_word_selected(word):
-            self.words[0] = word
-            ui.switch_palette(word)
+            self.words[self.selected_word_idx] = word
             sound.play("c3e3", 8)
 
-        # TODO: scrolling
+        if btnp(Map.up):
+            prev_row, on_screen, _, _ = words_on_screen(self.text, self.words, self.scroll)
+            if self.selected_word_idx - 1 in on_screen:
+                self.selected_word_idx -= 1
+            elif self.selected_word_idx - 1 in prev_row:
+                self.scroll -= 1
+                self.selected_word_idx -= 1
+            else:
+                self.scroll = max(0, self.scroll - 1)
+
+        if btnp(Map.down):
+            _, on_screen, next_row, max_row = words_on_screen(self.text, self.words, self.scroll)
+            if self.selected_word_idx + 1 in on_screen:
+                self.selected_word_idx += 1
+            elif self.selected_word_idx + 1 in next_row:
+                self.scroll += 1
+                self.selected_word_idx += 1
+            else:
+                self.scroll = min(self.scroll + 1, max_row - TEXT_ROWS + 1)
 
         if btnp(Map.action):
             return WordMenu(self.known_words, self.words[0], on_word_selected, self)
@@ -47,13 +67,38 @@ class Menu(Screen):
     def draw(self):
         pyxel.cls(0)
         smart_word_rows = draw_smart_text(
-            self.intro_text,
+            self.text,
             self.words,
             self.known_words,
-            0,
+            self.selected_word_idx,
             (self.frame > FPS // 2),
-            0)
+            self.scroll)
 
+
+class TitleScreen(SmartText):
+    def __init__(self):
+        super().__init__(
+            text = """The Player
+                        chose a(n) {} palette. There was a lot of text after that, just to test scrolling functionality.
+                        
+                        And yet more.
+                        
+                        Player then {} the game.""",
+            words = ["original", "looked at"],
+            known_words = {"original", "harsh", "gray", "looked at", "started"}
+        )
+
+    def update(self):
+        new_state = super().update()
+        ui.switch_palette(self.words[0])
+
+        if self.words[1] == "started":
+            return Victory()
+        else:
+            return new_state
+
+    def draw(self):
+        super().draw()
 
 # TODO: scrolling markers
 class WordMenu(Screen):
@@ -108,4 +153,4 @@ class Victory(Screen):
 
     def draw(self):
         pyxel.cls(0)
-        ui.draw_text_row(MIDDLE_ROW, "You win!", 1)
+        ui.draw_text_row(MIDDLE_ROW, "    You win!", 1)

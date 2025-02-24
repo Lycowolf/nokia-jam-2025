@@ -18,3 +18,4 @@ MIDDLE_ROW = math.floor(TEXT_ROWS / 2)
 TEXT_OFFSET_Y = FONT_HEIGHT // 2
 
 SMART_TEXT_MARKER = "{}"
+NEWLINE_MARKER = "\n[ \t]*" # eat whitespace after newline, to enable using indented multiline strings
