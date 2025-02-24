@@ -1,5 +1,5 @@
-from screen import InvestigationScreen, Way, StoryScreen
-
+from screen import InvestigationScreen, Way, StoryScreen, DeductionScreen
+import game_state
 
 def setup_scenario(skip_intro=False):
 
@@ -39,6 +39,16 @@ def setup_scenario(skip_intro=False):
                             "It all began with a dead guy in a theatre lobby...",
                         ])
 
+    words = ["foyer", "room center", "closet", "broom", "chandelier", "knife", "break", "conceal", "fall", "kill",
+             "moved", "cleaned", "faked", "blood", "chest", "culprit", "victim"]
+    deductions = [
+        DeductionScreen("Victim was being drama queen in the {}", words, ["room center"]),
+        DeductionScreen("This angered spirits. They caused the {} to {} and {} the victim.", words, ["chandelier", "fall", "kill"]),
+        DeductionScreen("The {} wanted to {} it. They {} the victim and {} the scene.", words, ["culprit", "conceal", "moved", "cleaned"]),
+        DeductionScreen("Then, they {} the {} wounds and added {}", words, ["faked", "knife", "blood"]),
+    ]
+    build_deduction_links(deductions)
+
     if skip_intro:
         return graph['1']
     else:
@@ -53,4 +63,15 @@ def build_scenario_graph(screens):
             if out:
                 screen.exits[way] = graph.get(out, screen)
 
+    game_state.last_investigation = screens[0]
+
     return graph
+
+def build_deduction_links(deductions):
+    for i, deduction in enumerate(deductions):
+        deduction.prev = deductions[(i-1) % len(deductions)]
+        deduction.next = deductions[(i+1) % len(deductions)]
+
+    game_state.last_deduction = deductions[0]
+
+    return deductions

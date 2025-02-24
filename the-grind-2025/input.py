@@ -7,9 +7,9 @@ class Map:
     down = [pyxel.KEY_KP_2, pyxel.KEY_DOWN]
     left = [pyxel.KEY_KP_4, pyxel.KEY_LEFT]
     right = [pyxel.KEY_KP_6, pyxel.KEY_RIGHT]
-    action = [pyxel.KEY_KP_5, pyxel.KEY_KP_ENTER, pyxel.KEY_RETURN, pyxel.KEY_SPACE]
+    action = [pyxel.KEY_KP_5, pyxel.KEY_KP_ENTER, pyxel.KEY_RETURN, pyxel.KEY_SPACE, pyxel.KEY_X]
     back = [pyxel.KEY_Z, pyxel.KEY_ESCAPE]
-
+    switch = [pyxel.KEY_TAB, pyxel.KEY_LSHIFT, pyxel.KEY_A]
 
 def btn(keys: list):
     for key in keys:
