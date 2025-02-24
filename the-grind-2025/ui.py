@@ -19,6 +19,20 @@ def draw_text_row(row, text: str, color: int = 1, x_off: int = 0) -> None:
     if 0 <= row < TEXT_ROWS:
         pyxel.text(x_off, row * FONT_HEIGHT + TEXT_OFFSET_Y, text, color, font)
 
+def draw_wrapped_text(text: str, starting_line: int = 0):
+    row_num = - starting_line
+    row_text = ""
+    for match in re.finditer(WORD_RE, text):
+        next_word = match[0]
+        try_text = row_text + next_word
+        if font.text_width(try_text) > SCREEN_W:
+            draw_text_row(row_num, row_text)
+            row_num += 1
+            row_text = next_word
+        else:
+            row_text = try_text
+    draw_text_row(row_num, row_text)
+
 def check_word(word: str, known_words: set[str]) -> str:
     if word not in known_words:
         print(f"Word {word} not in the set of known words {known_words}")
