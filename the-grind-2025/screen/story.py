@@ -12,11 +12,7 @@ class StoryScreen(Screen):
     def draw(self):
         pyxel.cls(0)
         draw_wrapped_text(self.text, 0)
-        if self.more:
-            draw_text_row(6, "...", x_off=75)
-        else:
-            draw_text_row(6, ">>", x_off=75)
-
+        draw_text_row(6, "..." if self.more else ">>", x_off=-3)
 
     def update(self):
         if pressed(Map.action):

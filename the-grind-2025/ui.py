@@ -17,7 +17,12 @@ def draw_text_row(row, text: str, color: int = 1, x_off: int = 0) -> None:
     """
     Text-printing primitive: prints a line of text to a specified screen row.
     Rows outside the allowed area are ignored.
+    Negative values of x_off signify offset from the right side
     """
+
+    if x_off < 0:
+        x_off = SCREEN_W - font.text_width(text) + x_off
+
     if 0 <= row < TEXT_ROWS:
         pyxel.text(x_off, row * FONT_HEIGHT + TEXT_OFFSET_Y, text, color, font)
 

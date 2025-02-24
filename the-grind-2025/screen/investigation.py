@@ -47,7 +47,7 @@ class InvestigationScreen(Screen):
              zip('<^v>', [Way.left, Way.up, Way.down, Way.right])
             )
         )
-        draw_text_row(6, exit_indicator, x_off=70)
+        draw_text_row(6, exit_indicator, x_off=-3)
 
     def update(self) -> Self:
         for way in Way.all():
