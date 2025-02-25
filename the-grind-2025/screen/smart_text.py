@@ -47,7 +47,7 @@ class SmartText(Screen):
                 self.scroll += 1
                 self.selected_word_idx += 1
             else:
-                self.scroll = min(self.scroll + 1, max_row - TEXT_ROWS + 1)
+                self.scroll = max(0, min(self.scroll + 1, max_row - TEXT_ROWS + 1))
 
         if btnp(Map.action):
             return WordMenu(self.known_words, self.words[0], on_word_selected, self)
