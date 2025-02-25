@@ -2,7 +2,7 @@ from typing import Self
 import pyxel
 from ui import draw_wrapped_text, draw_text_row, draw_smart_text
 from input import btnp as pressed, Map
-from constants import SMART_TEXT_MARKER
+from constants import SMART_TEXT_MARKER, SCREEN_H
 from .base import Screen
 from .word_menu import WordMenu
 from .victory import Victory
@@ -24,7 +24,9 @@ class DeductionScreen(Screen):
     def draw(self):
         pyxel.cls(0)
 
-        draw_smart_text(self.text, self.words, self.word_set, self.selected, self.correct(), 0)
+        draw_smart_text(self.text, self.words, self.word_set, self.selected, False, 0)
+
+        draw_progress(game_state.deduction_progress(self))
 
         if self.correct():
             draw_text_row(6, "ok", x_off=-3)
@@ -60,3 +62,19 @@ class DeductionScreen(Screen):
             return game_state.last_investigation
 
         return self
+
+def draw_progress(progress):
+    for idx, (correct, big) in enumerate(progress):
+        size = 3
+        x = 5 + idx * (size + 2)
+        y = SCREEN_H - 5
+
+        if big:
+            x -= 1
+            y -= 1
+            size += 2
+
+        if correct:
+            pyxel.rect(x, y, size, size, col=1)
+        else:
+            pyxel.rectb(x, y, size, size, col=1)

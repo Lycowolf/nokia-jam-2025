@@ -1,7 +1,7 @@
 last_investigation = None
 last_deduction = None
 
-deduction_list = None
+deduction_list = []
 investigation_graph = None
 
 def setup_game_state(investigations, deductions):
@@ -16,3 +16,6 @@ def is_everything_solved():
         return False
 
     return all(deduction.correct() for deduction in deduction_list)
+
+def deduction_progress(deduction):
+    return [(d.correct(), d == deduction) for d in deduction_list]
