@@ -16,6 +16,7 @@ class SmartText(Screen):
     frame = 0
     scroll = 0
     selected_word_idx = 0
+    menu_enabled = True
 
     def __init__(self, text: str, words: list[str], known_words: set[str]):
         self.text = text
@@ -49,7 +50,7 @@ class SmartText(Screen):
             else:
                 self.scroll = max(0, min(self.scroll + 1, max_row - TEXT_ROWS + 1))
 
-        if btnp(Map.action):
+        if btnp(Map.action) and self.menu_enabled:
             return WordMenu(self.known_words, self.words[0], on_word_selected, self)
 
         return self
