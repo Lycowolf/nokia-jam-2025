@@ -36,6 +36,9 @@ class DeductionScreen(Screen):
 
     def on_word_selected(self, word):
         self.words[self.selected] = word
+        if self.correct():
+            # fix words, remove selection fields
+            self.text = self.text.format(*self.words)
 
     def update(self) -> Self:
         game_state.last_deduction = self
