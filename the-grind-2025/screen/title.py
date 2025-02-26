@@ -13,6 +13,7 @@ from .transition import Transition
 from misc_types import Way
 from .base import Screen
 from .smart_text import SmartText
+from scenario import haunted_mansion
 
 
 class TitleScreen(SmartText):
@@ -31,7 +32,8 @@ class TitleScreen(SmartText):
 
         ui.switch_palette(self.words[0])
         if self.words[1] == "started":
-            scenario = case1.setup_test_scenario()
+            #scenario = case1.setup_test_scenario()
+            haunted_mansion.setup_scenario()
             return Transition(self, game_state.last_investigation, fade_noise="dark")
         else:
             return new_state
