@@ -1,5 +1,6 @@
 import pyxel
 from collections import namedtuple
+from misc_types import Way
 
 # TODO: more keys, more mappings. Configurable?
 class Map:
@@ -10,6 +11,13 @@ class Map:
     action = [pyxel.KEY_KP_5, pyxel.KEY_KP_ENTER, pyxel.KEY_RETURN, pyxel.KEY_SPACE, pyxel.KEY_X]
     back = [pyxel.KEY_Z, pyxel.KEY_ESCAPE]
     switch = [pyxel.KEY_TAB, pyxel.KEY_LSHIFT, pyxel.KEY_A]
+
+    way_keys = {
+        Way.up: up,
+        Way.down: down,
+        Way.left: left,
+        Way.right: right,
+    }
 
 def btn(keys: list):
     for key in keys:
