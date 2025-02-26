@@ -1,4 +1,3 @@
-from enum import Enum, auto
 from typing import Self
 import pyxel
 from ui import draw_wrapped_text, draw_text_row
@@ -6,26 +5,10 @@ from input import btnp as pressed, Map
 from .search_menu import SearchMenuScreen
 from .item import ItemScreen
 import game_state
+from misc_types import Way
 
 from .base import Screen
-
-class Way(Enum):
-    up = auto(),
-    down = auto(),
-    left = auto(),
-    right = auto(),
-
-    @staticmethod
-    def all():
-        return [Way.up, Way.down, Way.left, Way.right]
-
-keys = {
-    Way.up: Map.up,
-    Way.down: Map.down,
-    Way.left: Map.left,
-    Way.right: Map.right,
-}
-
+from .transition import Transition
 
 class InvestigationScreen(Screen):
     last = None
@@ -56,8 +39,8 @@ class InvestigationScreen(Screen):
         game_state.last_investigation = self
 
         for way in Way.all():
-            if self.exits[way] and pressed(keys[way]):
-                return self.exits[way]
+            if self.exits[way] and pressed(Map.way_keys[way]):
+                return Transition(self, self.exits[way], shift_dir=way)
 
         if pressed(Map.action):
             if len(self.objects) == 0:

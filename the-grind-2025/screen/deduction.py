@@ -6,6 +6,8 @@ from constants import SMART_TEXT_MARKER, SCREEN_H
 from .smart_text import SmartText
 from .victory import Victory
 import game_state
+from .transition import Transition
+from misc_types import Way
 
 class DeductionScreen(SmartText):
     last = None
@@ -47,10 +49,10 @@ class DeductionScreen(SmartText):
                 return Victory()
 
         if pressed(Map.left):
-            return self.prev
+            return Transition(self, self.prev, shift_dir=Way.left)
 
         if pressed(Map.right):
-            return self.next
+            return Transition(self, self.next, shift_dir=Way.right)
 
         if pressed(Map.switch):
             return game_state.last_investigation
