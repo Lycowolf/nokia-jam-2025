@@ -30,7 +30,7 @@ class InvestigationScreen(Screen):
 
         exit_indicator = ''.join(
             (arrow if self.exits[way] is not None else '' for arrow, way in
-             zip('<^v>', [Way.left, Way.up, Way.down, Way.right])
+             zip('←↑↓→', [Way.left, Way.up, Way.down, Way.right])
             )
         )
         draw_text_row(6, exit_indicator, x_off=-3)

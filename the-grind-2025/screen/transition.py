@@ -1,3 +1,4 @@
+import random
 from operator import length_hint
 from typing import Self
 
@@ -11,7 +12,7 @@ from ui import draw_text_row, font
 class Transition(Screen):
 
 
-    def __init__(self, state_from, state_to, length=FPS//2, shift_dir=None, fade_label=None):
+    def __init__(self, state_from, state_to, length=FPS//2, shift_dir=None, fade_label=None, fade_noise=None):
         self.state_to = state_to
         state_to.draw()
         self.image_to = snapshot()
@@ -33,6 +34,9 @@ class Transition(Screen):
             self.label = fade_label
             self.animation = self.fade_label_skew
             self.length = FPS
+        elif fade_noise:
+            self.length = FPS
+            self.animation = self.fade_noise if fade_noise == "light" else self.fade_noise_dark
         else:
             self.animation = self.cut
             self.length = 1
@@ -89,10 +93,20 @@ class Transition(Screen):
             draw_text_row(3, self.label, color=1, x_off=(SCREEN_W-font.text_width(self.label))//2)
 
     def fade_noise(self):
-        pass
+        fade = (self.frame + 1) / self.length
+        pyxel.cls(0)
+        pyxel.dither(1 - fade)
+        pyxel.blt(0, 0, self.image_from, 0, 0, SCREEN_W, SCREEN_H)
+        pyxel.dither(fade)
+        pyxel.blt(0, 0, self.image_to, 0, 0, SCREEN_W, SCREEN_H)
 
-    def fade_noise_black(self):
-        pass
+    def fade_noise_dark(self):
+        fade = (self.frame + 1) / self.length
+        pyxel.cls(1)
+        pyxel.dither(1 - fade)
+        pyxel.blt(0, 0, self.image_from, 0, 0, SCREEN_W, SCREEN_H)
+        pyxel.dither(fade)
+        pyxel.blt(0, 0, self.image_to, 0, 0, SCREEN_W, SCREEN_H)
 
     def cut(self):
         # no animation, just switch

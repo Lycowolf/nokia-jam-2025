@@ -9,8 +9,8 @@ class Map:
     left = [pyxel.KEY_KP_4, pyxel.KEY_LEFT]
     right = [pyxel.KEY_KP_6, pyxel.KEY_RIGHT]
     action = [pyxel.KEY_KP_5, pyxel.KEY_KP_ENTER, pyxel.KEY_RETURN, pyxel.KEY_SPACE, pyxel.KEY_X]
-    back = [pyxel.KEY_Z, pyxel.KEY_ESCAPE]
-    switch = [pyxel.KEY_TAB, pyxel.KEY_LSHIFT, pyxel.KEY_A]
+    back = [pyxel.KEY_KP_MULTIPLY, pyxel.KEY_Z, pyxel.KEY_ESCAPE]
+    switch = [pyxel.KEY_KP_DIVIDE, pyxel.KEY_TAB, pyxel.KEY_LSHIFT, pyxel.KEY_A]
 
     way_keys = {
         Way.up: up,

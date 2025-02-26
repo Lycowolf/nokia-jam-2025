@@ -2,7 +2,7 @@ from screen import InvestigationScreen, StoryScreen, DeductionScreen
 import game_state
 from misc_types import Way
 
-def setup_scenario(skip_intro=False):
+def setup_test_scenario(skip_intro=False):
 
     screens = [
         InvestigationScreen('1', "Foyer of a run-down, ratty theatre. There is a dead guy lying in a pool of blood.", right='2', objects=[
@@ -40,7 +40,7 @@ def setup_scenario(skip_intro=False):
                             "It all began with a dead guy in a theatre lobby...",
                         ])
 
-    words = ["foyer", "room center", "closet", "broom", "chandelier", "knife", "break", "conceal", "fall", "kill",
+    words = ["-----", "foyer", "room center", "closet", "broom", "chandelier", "knife", "break", "conceal", "fall", "kill",
              "moved", "cleaned", "faked", "blood", "chest", "culprit", "victim"]
     deductions = [
         DeductionScreen("Victim was being drama queen in the {}", words, ["room center"]),
