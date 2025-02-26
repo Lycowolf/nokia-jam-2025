@@ -1,5 +1,6 @@
-from screen import InvestigationScreen, Way, StoryScreen, DeductionScreen
+from screen import InvestigationScreen, StoryScreen, DeductionScreen
 import game_state
+from misc_types import Way
 
 def setup_scenario(skip_intro=False):
 

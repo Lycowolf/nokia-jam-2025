@@ -49,7 +49,7 @@ class InvestigationScreen(Screen):
                 return SearchMenuScreen(self, self.objects)
 
         if pressed(Map.switch):
-            return game_state.last_deduction
+            return Transition(self, game_state.last_deduction, fade_label="Deduction")
 
         return self
 

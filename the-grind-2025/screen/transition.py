@@ -1,15 +1,17 @@
+from operator import length_hint
 from typing import Self
 
 from .base import Screen
 import pyxel
 from constants import SCREEN_W, SCREEN_H, FPS
 from misc_types import Way
+from ui import draw_text_row, font
 
 
 class Transition(Screen):
 
 
-    def __init__(self, state_from, state_to, shift_dir=None, **kwargs):
+    def __init__(self, state_from, state_to, length=FPS//2, shift_dir=None, fade_label=None):
         self.state_to = state_to
         state_to.draw()
         self.image_to = snapshot()
@@ -19,16 +21,23 @@ class Transition(Screen):
         self.image_from = snapshot()
 
         self.frame = 0
-        self.length = FPS // 2
+        self.length = length
+        self.label = ''
 
-        self.animation = {Way.left: self.slide_left,
-                          Way.right: self.slide_right,
-                          Way.up: self.slide_up,
-                          Way.down: self.slide_down,
-                          }.get(shift_dir, self.slide_down)
+        if shift_dir:
+            self.animation = {Way.left: self.slide_left,
+                              Way.right: self.slide_right,
+                              Way.up: self.slide_up,
+                              Way.down: self.slide_down}.get(shift_dir)
+        elif fade_label:
+            self.label = fade_label
+            self.animation = self.fade_label_skew
+            self.length = FPS
+        else:
+            self.animation = self.cut
+            self.length = 1
 
     def draw(self):
-        shift = int(SCREEN_W * (self.frame / self.length))
         self.animation()
 
     def update(self) -> Self:
@@ -62,8 +71,32 @@ class Transition(Screen):
         pyxel.blt(0, -shift, self.image_from, 0, 0, SCREEN_W, SCREEN_H)
         pyxel.blt(0, SCREEN_H - shift, self.image_to, 0, 0, SCREEN_W, SCREEN_H)
 
+    def fade_label_skew(self):
+        bgr = self.image_from if self.frame < self.length // 2 else self.image_to
+        phase = int(SCREEN_W * (1 - abs(1 - (2*self.frame/self.length))))
+
+        pyxel.blt(0, 0, bgr, 0, 0, SCREEN_W, SCREEN_H)
+
+        skew = 5
+        center = SCREEN_W // 2
+
+        for i in range(phase):
+            pyxel.line(center + skew + i, 0, center - skew + i, SCREEN_H, col=0)
+            pyxel.line(center + skew - i, 0, center - skew - i, SCREEN_H, col=0)
 
 
+        if phase > font.text_width(self.label) // 2:
+            draw_text_row(3, self.label, color=1, x_off=(SCREEN_W-font.text_width(self.label))//2)
+
+    def fade_noise(self):
+        pass
+
+    def fade_noise_black(self):
+        pass
+
+    def cut(self):
+        # no animation, just switch
+        pyxel.blt(0, 0, self.image_to, 0, 0, SCREEN_W, SCREEN_H)
 
 def snapshot():
     image = pyxel.Image(SCREEN_W, SCREEN_H)

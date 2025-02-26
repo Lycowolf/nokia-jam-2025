@@ -55,7 +55,7 @@ class DeductionScreen(SmartText):
             return Transition(self, self.next, shift_dir=Way.right)
 
         if pressed(Map.switch):
-            return game_state.last_investigation
+            return Transition(self, game_state.last_investigation, fade_label="Investigation")
 
         return self
 
