@@ -1,6 +1,4 @@
 import pyxel
-from typing import Self, Callable
-from abc import ABC
 import ui
 from input import Map
 from ui import invert_text_blink, draw_text_row, draw_smart_text, layout_smart_text, words_on_screen
@@ -8,12 +6,11 @@ from constants import *
 from input import btnp
 import sound
 import game_state
-import scenario.investigation_test as case1
 from .transition import Transition
 from misc_types import Way
 from .base import Screen
 from .smart_text import SmartText
-from scenario import haunted_mansion
+from scenario import haunted_mansion, tutorial, investigation_test
 
 
 class TitleScreen(SmartText):
@@ -32,9 +29,10 @@ class TitleScreen(SmartText):
 
         ui.switch_palette(self.words[0])
         if self.words[1] == "started":
-            #scenario = case1.setup_test_scenario()
-            # return Transition(self, game_state.last_investigation, fade_noise="dark")
-            start = haunted_mansion.setup_scenario(skip_intro=False)
+            # start = investigation_test.setup_test_scenario()
+            start = tutorial.setup_scenario()
+            # start = haunted_mansion.setup_scenario(skip_intro=False)
+
             return Transition(self, start, fade_noise="dark")
         else:
             return new_state
