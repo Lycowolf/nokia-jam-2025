@@ -2,6 +2,8 @@ import random
 from operator import length_hint
 from typing import Self
 
+from pyxel.pyxel_wrapper import FONT_HEIGHT
+
 from .base import Screen
 import pyxel
 from constants import SCREEN_W, SCREEN_H, FPS
@@ -85,12 +87,17 @@ class Transition(Screen):
         center = SCREEN_W // 2
 
         for i in range(phase):
-            pyxel.line(center + skew + i, 0, center - skew + i, SCREEN_H, col=0)
-            pyxel.line(center + skew - i, 0, center - skew - i, SCREEN_H, col=0)
-
+            pyxel.line(center + skew + i, 0, center - skew + i, SCREEN_H, col=1)
+            pyxel.line(center + skew - i, 0, center - skew - i, SCREEN_H, col=1)
 
         if phase > font.text_width(self.label) // 2:
-            draw_text_row(3, self.label, color=1, x_off=(SCREEN_W-font.text_width(self.label))//2)
+            text_width = font.text_width(self.label) - 1
+            x_offset = (SCREEN_W-text_width)//2
+            line_y = 3*FONT_HEIGHT, 4*FONT_HEIGHT + 4
+
+            draw_text_row(3, self.label, color=0, x_off=x_offset)
+            pyxel.line(x_offset, line_y[0], x_offset + text_width , line_y[0], col=0)
+            pyxel.line(x_offset, line_y[1], x_offset + text_width, line_y[1], col=0)
 
     def fade_noise(self):
         fade = (self.frame + 1) / self.length
