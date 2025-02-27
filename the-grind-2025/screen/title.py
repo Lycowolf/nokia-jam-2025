@@ -33,8 +33,9 @@ class TitleScreen(SmartText):
         ui.switch_palette(self.words[0])
         if self.words[1] == "started":
             #scenario = case1.setup_test_scenario()
-            haunted_mansion.setup_scenario()
-            return Transition(self, game_state.last_investigation, fade_noise="dark")
+            # return Transition(self, game_state.last_investigation, fade_noise="dark")
+            start = haunted_mansion.setup_scenario(skip_intro=False)
+            return Transition(self, start, fade_noise="dark")
         else:
             return new_state
 

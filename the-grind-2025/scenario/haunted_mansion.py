@@ -1,5 +1,6 @@
 import game_state
 from screen import InvestigationScreen, StoryScreen, DeductionScreen
+from screen.transition import Transition
 from . import build_scenario_graph, build_deduction_links
 
 def setup_scenario(skip_intro=False):
@@ -82,14 +83,14 @@ def setup_scenario(skip_intro=False):
 
     intro = StoryScreen(next_screen=graph['entry'],
                         script=[
-                            """It was dark and stormy night, and I slept through it like a baby.
-                            They called me at nine in the morning. The famous skeptic departed and police that arrived 
-                            on the scene is clueless.
-                            Looks like I am visiting a haunted mansion. I hope this ride will pay well...                             
-                            """
+                            "It was dark and stormy night, and I slept through it like a baby.",
+                            "They called me at nine in the morning. The famous skeptic departed and police that arrived"
+                            "on the scene is clueless.",
+                            "Looks like I am visiting a haunted mansion. I hope this ride will pay well..."
                         ])
+    intro.next = Transition(intro, intro.next, fade_label="Investigation")
 
     if skip_intro:
-        return graph['1']
+        return graph['entry']
     else:
         return intro
