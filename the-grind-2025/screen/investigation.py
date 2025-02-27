@@ -13,7 +13,7 @@ from .transition import Transition
 class InvestigationScreen(Screen):
     last = None
 
-    def __init__(self, name, text, left=None, right=None, up=None, down=None, objects={}):
+    def __init__(self, name, text, left=None, right=None, up=None, down=None, objects=[]):
         self.name = name
         self.text = text
         self.exits = {
