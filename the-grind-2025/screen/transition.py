@@ -1,18 +1,17 @@
 import random
 from operator import length_hint
 from typing import Self
-
 from pyxel.pyxel_wrapper import FONT_HEIGHT
-
+import sound
 from .base import Screen
 import pyxel
-from constants import SCREEN_W, SCREEN_H, FPS
+from constants import *
 from misc_types import Way
 from ui import draw_text_row, font
 
 
 class Transition(Screen):
-
+    sound = None
 
     def __init__(self, state_from, state_to, length=FPS//2, shift_dir=None, fade_label=None, fade_noise=None):
         self.state_to = state_to
@@ -36,6 +35,7 @@ class Transition(Screen):
             self.label = fade_label
             self.animation = self.fade_label_skew
             self.length = FPS
+            self.sound = sound.mode_switch
         elif fade_noise:
             self.length = FPS
             self.animation = self.fade_noise if fade_noise == "light" else self.fade_noise_dark
@@ -47,6 +47,8 @@ class Transition(Screen):
         self.animation()
 
     def update(self) -> Self:
+        if self.frame == 0 and self.sound is not None:
+            self.sound()
         self.frame += 1
         if self.frame >= self.length:
             return self.state_to
@@ -87,21 +89,21 @@ class Transition(Screen):
         center = SCREEN_W // 2
 
         for i in range(phase):
-            pyxel.line(center + skew + i, 0, center - skew + i, SCREEN_H, col=1)
-            pyxel.line(center + skew - i, 0, center - skew - i, SCREEN_H, col=1)
+            pyxel.line(center + skew + i, 0, center - skew + i, SCREEN_H, col=FOREGROUND)
+            pyxel.line(center + skew - i, 0, center - skew - i, SCREEN_H, col=FOREGROUND)
 
         if phase > font.text_width(self.label) // 2:
             text_width = font.text_width(self.label) - 1
             x_offset = (SCREEN_W-text_width)//2
             line_y = 3*FONT_HEIGHT, 4*FONT_HEIGHT + 4
 
-            draw_text_row(3, self.label, color=0, x_off=x_offset)
-            pyxel.line(x_offset, line_y[0], x_offset + text_width , line_y[0], col=0)
-            pyxel.line(x_offset, line_y[1], x_offset + text_width, line_y[1], col=0)
+            draw_text_row(3, self.label, color=BACKGROUND, x_off=x_offset)
+            pyxel.line(x_offset, line_y[0], x_offset + text_width , line_y[0], col=BACKGROUND)
+            pyxel.line(x_offset, line_y[1], x_offset + text_width, line_y[1], col=BACKGROUND)
 
     def fade_noise(self):
         fade = (self.frame + 1) / self.length
-        pyxel.cls(0)
+        pyxel.cls(BACKGROUND)
         pyxel.dither(1 - fade)
         pyxel.blt(0, 0, self.image_from, 0, 0, SCREEN_W, SCREEN_H)
         pyxel.dither(fade)
@@ -109,7 +111,7 @@ class Transition(Screen):
 
     def fade_noise_dark(self):
         fade = (self.frame + 1) / self.length
-        pyxel.cls(1)
+        pyxel.cls(FOREGROUND)
         pyxel.dither(1 - fade)
         pyxel.blt(0, 0, self.image_from, 0, 0, SCREEN_W, SCREEN_H)
         pyxel.dither(fade)

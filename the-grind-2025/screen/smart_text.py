@@ -28,7 +28,7 @@ class SmartText(Screen):
         self.frame = (self.frame + 1) % FPS
         def on_word_selected(word):
             self.words[self.selected_word_idx] = word
-            sound.play("c3e3", 8)
+            sound.confirm()
 
         if btnp(Map.up):
             prev_row, on_screen, _, _ = words_on_screen(self.text, self.words, self.scroll)
@@ -56,7 +56,7 @@ class SmartText(Screen):
         return self
 
     def draw(self) -> None:
-        pyxel.cls(0)
+        pyxel.cls(BACKGROUND)
         smart_word_rows = draw_smart_text(
             self.text,
             self.words,

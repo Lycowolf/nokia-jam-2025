@@ -1,5 +1,7 @@
 from typing import Self
 import pyxel
+from constants import *
+import sound
 from ui import draw_wrapped_text, draw_text_row, draw_smart_text
 from input import btnp as pressed, Map
 from constants import SMART_TEXT_MARKER, SCREEN_H
@@ -21,6 +23,7 @@ class DeductionScreen(SmartText):
 
         self.prev = self
         self.next = self
+        self.solved = False
 
     def draw(self):
         super().draw()
@@ -28,6 +31,9 @@ class DeductionScreen(SmartText):
         draw_progress(game_state.deduction_progress(self))
 
         if self.correct():
+            if not self.solved:
+                sound.deduction_success()
+                self.solved = True
             draw_text_row(6, "ok", x_off=-3)
 
     def correct(self):
@@ -71,6 +77,6 @@ def draw_progress(progress):
             size += 2
 
         if correct:
-            pyxel.rect(x, y, size, size, col=1)
+            pyxel.rect(x, y, size, size, col=FOREGROUND)
         else:
-            pyxel.rectb(x, y, size, size, col=1)
+            pyxel.rectb(x, y, size, size, col=FOREGROUND)

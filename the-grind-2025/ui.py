@@ -13,7 +13,7 @@ def switch_palette(name: str) -> None:
         # load only palette; the pyxel python binding exposes wrong type
         pyxel.load(f"assets/palettes/{name}.pyxres", excl_images=True, excl_musics=True, excl_sounds=True, excl_tilemaps=True)
 
-def draw_text_row(row, text: str, color: int = 1, x_off: int = 0) -> None:
+def draw_text_row(row, text: str, color: int = FOREGROUND, x_off: int = 0) -> None:
     """
     Text-printing primitive: prints a line of text to a specified screen row.
     Rows outside the allowed area are ignored.
