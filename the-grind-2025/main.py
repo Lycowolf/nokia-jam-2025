@@ -10,7 +10,8 @@ class Game:
     def __init__(self):
         pyxel.init(SCREEN_W, SCREEN_H, fps=FPS, title="Nokia 3310 Jam 2025", display_scale=DISPLAY_SCALE)
         sound.init()
-        self.screen = screen.TitleScreen()
+        # self.screen = screen.TitleScreen()
+        self.screen = screen.CaseMenuScreen()
 
         pyxel.run(self.update, self.draw)
 
