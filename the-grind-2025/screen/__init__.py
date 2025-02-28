@@ -6,6 +6,6 @@ from .story import StoryScreen
 from .deduction import DeductionScreen
 from .victory import Victory
 from .smart_text import SmartText
-from .title import TitleScreen
+from .settings import Settings
 from .transition import Transition
 from .case_menu import CaseMenuScreen

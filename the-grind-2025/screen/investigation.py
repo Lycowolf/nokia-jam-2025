@@ -6,6 +6,7 @@ from .search_menu import SearchMenuScreen
 from .item import ItemScreen
 import game_state
 from misc_types import Way
+from constants import *
 
 from .base import Screen
 from .transition import Transition
@@ -25,7 +26,7 @@ class InvestigationScreen(Screen):
         self.objects = objects
 
     def draw(self):
-        pyxel.cls(0)
+        pyxel.cls(BACKGROUND)
         draw_wrapped_text(self.text, 0)
 
         exit_indicator = ''.join(

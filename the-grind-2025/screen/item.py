@@ -1,3 +1,4 @@
+import pyxel
 from ui import draw_wrapped_text, draw_text_row
 from input import btnp as pressed, Map
 from .smart_text import SmartText

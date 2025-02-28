@@ -1,5 +1,7 @@
 from typing import Self
 import pyxel
+
+from constants import BACKGROUND
 from ui import draw_wrapped_text, draw_text_row, switch_palette
 from input import btnp as pressed, Map
 import scenario
@@ -16,7 +18,7 @@ class CaseMenuScreen(Screen):
         switch_palette('original')
 
     def draw(self):
-        pyxel.cls(0)
+        pyxel.cls(BACKGROUND)
         draw_text_row(0, "Select case:", x_off=5)
 
         for i, (text, _) in enumerate(self.cases):

@@ -1,6 +1,6 @@
 import pyxel
 import ui
-from constants import MIDDLE_ROW
+from constants import *
 from .base import Screen
 
 class Victory(Screen):
@@ -8,5 +8,5 @@ class Victory(Screen):
         return self
 
     def draw(self):
-        pyxel.cls(0)
-        ui.draw_text_row(MIDDLE_ROW, "    You win!", 1)
+        pyxel.cls(BACKGROUND)
+        ui.draw_text_row(MIDDLE_ROW, "    You win!", FOREGROUND)

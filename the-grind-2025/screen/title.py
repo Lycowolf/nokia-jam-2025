@@ -1,42 +1,42 @@
 import pyxel
-import ui
-from input import Map
-from ui import invert_text_blink, draw_text_row, draw_smart_text, layout_smart_text, words_on_screen
+from input import Map, btnp
 from constants import *
-from input import btnp
-import sound
-import game_state
+from scenario import haunted_mansion, tutorial
 from .transition import Transition
-from misc_types import Way
 from .base import Screen
-from .smart_text import SmartText
-from scenario import haunted_mansion, tutorial, investigation_test
+import screen
 
 
-class TitleScreen(SmartText):
+class PreTitle(Screen):
+    """Just sets color for a transition"""
     def __init__(self):
-        super().__init__(
-            text="""The Player 
-                        chose a(n) {} palette.
-                        
-                        Player then {} the game.""",
-            words=["original", "looked at"],
-            known_words={"original", "harsh", "gray", "looked at", "started"}
-        )
-        ui.switch_palette(self.words[0]) # TODO
+        super().__init__()
 
     def update(self) -> Screen:
-        new_state = super().update()
+            return Transition(self, Title(), fade_noise="light")
 
-        ui.switch_palette(self.words[0])
-        if self.words[1] == "started":
+    def draw(self) -> None:
+        pyxel.cls(BACKGROUND)
+
+
+class Title(Screen):
+    timer: int = 2 * FPS # seconds
+
+    def __init__(self):
+        super().__init__()
+        pyxel.load("assets/images.pyxres")
+
+
+    def update(self) -> Screen:
+        self.timer -= 1
+        if self.timer == 0 or btnp(Map.action):
             # start = investigation_test.setup_test_scenario()
             start = tutorial.setup_scenario()
             # start = haunted_mansion.setup_scenario(skip_intro=False)
+            return Transition(self, screen.CaseMenuScreen(), fade_noise="dark")
 
-            return Transition(self, start, fade_noise="dark")
-        else:
-            return new_state
+        return self
 
     def draw(self) -> None:
-        super().draw()
+        pyxel.cls(BACKGROUND)
+        pyxel.blt(0, 0, IMAGE_TITLE["bank"], IMAGE_TITLE["u"], IMAGE_TITLE["v"], SCREEN_W, SCREEN_H)

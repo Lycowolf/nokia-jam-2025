@@ -6,6 +6,8 @@ DISPLAY_SCALE = 6
 FPS = 15
 
 PALETTES = {"original", "harsh", "gray"}
+BACKGROUND = 1
+FOREGROUND = 0
 
 # this font is special: Basic Latin (u0020 - u007F) glyphs/codepoints are copied to Private Use Area (uE020 - uE07F)
 # end black/white inverted
@@ -20,3 +22,5 @@ TEXT_OFFSET_Y = FONT_HEIGHT // 2
 SMART_TEXT_MARKER = "{}"
 # NEWLINE_MARKER = "\n[ \t]*\n[ \t]*" # eat whitespace after newline, to enable using indented multiline strings
 NEWLINE_MARKER = "\n[ \t]*" # keep double newlines
+
+IMAGE_TITLE = {"bank": 0, "u": 0, "v": 0}

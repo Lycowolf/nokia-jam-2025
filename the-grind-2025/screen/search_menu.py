@@ -2,6 +2,7 @@ from typing import Self
 import pyxel
 from ui import draw_wrapped_text, draw_text_row
 from input import btnp as pressed, Map
+from constants import *
 
 from .base import Screen
 from .item import ItemScreen
@@ -15,7 +16,7 @@ class SearchMenuScreen(Screen):
         self.objects = objects
 
     def draw(self):
-        pyxel.cls(0)
+        pyxel.cls(BACKGROUND)
         draw_text_row(0, "Search ...", x_off=5)
 
         for i, (text, _) in enumerate(self.objects):

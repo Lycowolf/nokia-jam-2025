@@ -42,7 +42,7 @@ class WordMenu(Screen):
     def draw(self):
         start_idx = self.selected - MIDDLE_ROW
 
-        pyxel.cls(0)
+        pyxel.cls(BACKGROUND)
         for i in range(TEXT_ROWS):
             word_idx = start_idx + i
             if not (0 <= word_idx < len(self.words)):
