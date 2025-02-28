@@ -1,9 +1,8 @@
 import ui
 from .title import PreTitle
-from .transition import Transition
 from .base import Screen
 from .smart_text import SmartText
-from scenario import haunted_mansion, tutorial, investigation_test
+import constants
 
 
 class Settings(SmartText):
@@ -20,7 +19,8 @@ class Settings(SmartText):
     def update(self) -> Screen:
         new_state = super().update()
 
-        ui.switch_palette(self.words[0])
+        constants.CHOSEN_PALETTE[0] = self.words[0]
+        ui.switch_palette(constants.CHOSEN_PALETTE[0])
         if self.words[1] == "started":
             return PreTitle()
         else:

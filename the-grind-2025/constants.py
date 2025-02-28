@@ -6,6 +6,7 @@ DISPLAY_SCALE = 6
 FPS = 15
 
 PALETTES = {"original", "harsh", "gray"}
+CHOSEN_PALETTE = ["original"] # can be changed in settings screen; must use mutable type here
 BACKGROUND = 1
 FOREGROUND = 0
 

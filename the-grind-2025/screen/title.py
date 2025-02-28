@@ -1,10 +1,12 @@
 import pyxel
+import ui
 from input import Map, btnp
 from constants import *
-from scenario import haunted_mansion, tutorial
 from .transition import Transition
 from .base import Screen
 import screen
+# Following import is necessary but when unused. IDK why. WTF
+from scenario import haunted_mansion, tutorial, investigation_test
 
 
 class PreTitle(Screen):
@@ -25,13 +27,14 @@ class Title(Screen):
     def __init__(self):
         super().__init__()
         pyxel.load("assets/images.pyxres")
+        ui.switch_palette(CHOSEN_PALETTE[0])
 
 
     def update(self) -> Screen:
         self.timer -= 1
         if self.timer == 0 or btnp(Map.action):
             # start = investigation_test.setup_test_scenario()
-            start = tutorial.setup_scenario()
+            # start = tutorial.setup_scenario()
             # start = haunted_mansion.setup_scenario(skip_intro=False)
             return Transition(self, screen.CaseMenuScreen(), fade_noise="dark")
 

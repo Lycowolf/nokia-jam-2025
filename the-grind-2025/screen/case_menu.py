@@ -15,7 +15,6 @@ class CaseMenuScreen(Screen):
             ('Haunted mansion', scenario.haunted_mansion.setup_scenario),
             ('Deadly theatrics', scenario.investigation_test.setup_test_scenario),
         ]
-        switch_palette('original')
 
     def draw(self):
         pyxel.cls(BACKGROUND)
