@@ -16,13 +16,14 @@ from scenario import haunted_mansion, tutorial, investigation_test
 class TitleScreen(SmartText):
     def __init__(self):
         super().__init__(
-            text="""The Player
+            text="""The Player 
                         chose a(n) {} palette.
                         
                         Player then {} the game.""",
             words=["original", "looked at"],
             known_words={"original", "harsh", "gray", "looked at", "started"}
         )
+        ui.switch_palette(self.words[0]) # TODO
 
     def update(self) -> Screen:
         new_state = super().update()

@@ -58,7 +58,7 @@ def setup_scenario(skip_intro=False):
                                 ("Window", "Ornamental metal bars cover the window. They are completely rusted together, "
                                            "there's no opening it without power tools.")
                             ],
-                            down="above stairs"),
+                            down="above stair"),
     ]
     graph = build_scenario_graph(screens)
 
