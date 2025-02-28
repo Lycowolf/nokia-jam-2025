@@ -1,5 +1,4 @@
 import pyxel
-import ui
 from input import Map
 from ui import invert_text_blink, draw_text_row, draw_smart_text, layout_smart_text, words_on_screen
 from constants import *
@@ -22,7 +21,15 @@ class SmartText(Screen):
         self.text = text
         self.words = words
         self.known_words = known_words
-        ui.switch_palette(self.words[0]) # TODO
+        if not known_words:
+            self.menu_enabled = False
+
+    def is_top(self):
+        return self.scroll == 0
+
+    def is_bottom(self):
+        _, max_row = layout_smart_text(self.text, self.words)
+        return self.scroll >= max_row - TEXT_ROWS + 1
 
     def update(self) -> Screen:
         self.frame = (self.frame + 1) % FPS
@@ -64,3 +71,27 @@ class SmartText(Screen):
             self.selected_word_idx,
             (self.frame > FPS // 2),
             self.scroll)
+
+        _, max_row = layout_smart_text(self.text, self.words)
+        if max_row > TEXT_ROWS - 1:
+            draw_scrollbar(self.scroll, max_row)
+
+def draw_scrollbar(line: int, lines: int, style='mini'):
+    max_line = lines - TEXT_ROWS + 2
+    x = SCREEN_W - 2
+    y = int(SCREEN_H * (line / max_line))
+    h = SCREEN_H // max_line
+
+    if style == 'black':
+        pyxel.line(x, 0, x, SCREEN_H- 1, col=1)
+        pyxel.line(x+1, y, x+1, y+h, col=1)
+    elif style == 'white':
+        pyxel.line(x, 0, x, SCREEN_H - 1, col=1)
+        pyxel.line(x + 1, 0, x + 1, SCREEN_H - 1, col=1)
+        pyxel.line(x + 1, y, x + 1, y + h, col=0)
+    elif style == 'thin':
+        pyxel.line(x + 1, 0, x + 1, SCREEN_H - 1, col=1)
+        pyxel.line(x + 1, y, x + 1, y + h, col=0)
+        pyxel.line(x, y, x, y + h, col=1)
+    elif style == 'mini':
+        pyxel.line(x+1, y, x+1, y + h, col=1)
