@@ -7,7 +7,7 @@ def setup_scenario(skip_intro=False):
     screens = [
         InvestigationScreen('entry',
                             "Entrance hall of an old mansion. A distraught-looking policewoman waits for you.",
-                            up='above stair',
+                            up='hallway',
                             objects=[
                                 ('Policewoman',
                                  """ "Finally you are here! It's a real mystery you know? How could they die alone in 
@@ -17,9 +17,11 @@ def setup_scenario(skip_intro=False):
                                 ('Stair', 'A creaky old stairway, just like from a Hollywood movie.'),
                                 ('Dust', 'Things here are dusty, as expected in this kind of a mansion.'),
                             ]),
+        InvestigationScreen('hallway',
+                            "The policewoman led you into a run-down hallway, illuminated by a camping lantern.",
+                            down='entry', up='above stair'),
         InvestigationScreen('above stair',
-                            "The policewoman led you into a run-down hallway, illuminated by a camping lantern. A man and a woman "
-                            "with bags under their eyes are waiting in front of a closed door covered in police tape. "
+                            "A man and a woman with bags under their eyes are waiting in front of a closed door covered in police tape. "
                             "An ornate key sits in the keyhole.",
                             objects=[
                                 ("Man", """The man is about fifty, his face pale.
@@ -42,23 +44,38 @@ def setup_scenario(skip_intro=False):
                                                 We heard the house creaking, but that's all."
 
                                                 She cleans her nose and wipes her eyes.
-                                      """)
+                                      """),
+                                ("Door", """Big, solid wooden door. Probably older that you are."""),
+                                ("Key", """A massive, antique key of finely wrought metal. This lock won't be opening quietly.""")
                             ],
-                            down="entry", up="room"),
+                            down="hallway", up="room"),
         InvestigationScreen('room',
-                            "A small room. A body wrapped in a sleeping bag lies on the floor in a pool of blood, impaled by a spear."
-                            "A medieval armor stands behind the door. There's a barred window on the opposite side of the room.",
+                            "A small room. A medieval armor stands behind the door. There's a body on the floor, and a small window on the other side.",
                             objects=[
-                                ("Body", "An expensively dressed man in his thirties. A spear was thrust into his heart, "
-                                "its point protruding from the man's chest. He has no other wounds."),
+                                ("Door", """Big, solid wooden door. Probably older that you are."""),
+                                ("Armor", "A suite of a medieval armor, complete with a helmet. It would look nice holding a spear. "),
+                                ("Body", "Sure looks dead. You can't see much from the doorway, you need to step closer. "),
+
+                            ],
+                            down="above stair", right='body'),
+        InvestigationScreen('body',"""A body wrapped in a sleeping bag lies on the floor in a pool of blood, impaled by a spear.""",
+                            objects=[
+                                ("Body",
+                                 "An expensively dressed man in his thirties. A spear was thrust into his heart, "
+                                 "its point protruding from the man's chest. He has no other wounds."),
                                 ("Spear", "A medieval spear with a sharp metal point at one end. The other end is "
                                           "covered with rounded ornament."),
                                 ("Blood", "A human blood. Starts to smell bad."),
-                                ("Armor", "A suite of a medieval armor, complete with a helmet. It would look nice holding a spear. "),
-                                ("Window", "Ornamental metal bars cover the window. They are completely rusted together, "
-                                           "there's no opening it without power tools.")
                             ],
-                            down="above stair"),
+                            left='room', right='window'),
+        InvestigationScreen('window', """There's a barred window on the opposite side of the room.""",
+                            objects=[
+                                ("Window",
+                                 "Ornamental metal bars cover the window. They are completely rusted together, "
+                                 "there's no opening it without power tools."),
+                                ("Other exits",
+                                 "Beside the door and the window, there is no plausible entry to the room."),
+                            ], left='body'),
     ]
     graph = build_scenario_graph(screens)
 
