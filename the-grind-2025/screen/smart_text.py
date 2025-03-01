@@ -83,15 +83,15 @@ def draw_scrollbar(line: int, lines: int, style='mini'):
     h = SCREEN_H // max_line
 
     if style == 'black':
-        pyxel.line(x, 0, x, SCREEN_H- 1, col=0)
-        pyxel.line(x+1, y, x+1, y+h, col=0)
+        pyxel.line(x, 0, x, SCREEN_H- 1, col=FOREGROUND)
+        pyxel.line(x+1, y, x+1, y+h, col=FOREGROUND)
     elif style == 'white':
-        pyxel.line(x, 0, x, SCREEN_H - 1, col=0)
-        pyxel.line(x + 1, 0, x + 1, SCREEN_H - 1, col=0)
-        pyxel.line(x + 1, y, x + 1, y + h, col=1)
+        pyxel.line(x, 0, x, SCREEN_H - 1, col=FOREGROUND)
+        pyxel.line(x + 1, 0, x + 1, SCREEN_H - 1, col=FOREGROUND)
+        pyxel.line(x + 1, y, x + 1, y + h, col=BACKGROUND)
     elif style == 'thin':
-        pyxel.line(x + 1, 0, x + 1, SCREEN_H - 1, col=0)
-        pyxel.line(x + 1, y, x + 1, y + h, col=1)
-        pyxel.line(x, y, x, y + h, col=0)
+        pyxel.line(x + 1, 0, x + 1, SCREEN_H - 1, col=FOREGROUND)
+        pyxel.line(x + 1, y, x + 1, y + h, col=BACKGROUND)
+        pyxel.line(x, y, x, y + h, col=FOREGROUND)
     elif style == 'mini':
-        pyxel.line(x+1, y, x+1, y + h, col=0)
+        pyxel.line(x+1, y, x+1, y + h, col=FOREGROUND)
