@@ -13,7 +13,7 @@ from ui import draw_text_row, font
 class Transition(Screen):
     sound = None
 
-    def __init__(self, state_from, state_to, length=FPS//2, shift_dir=None, fade_label=None, fade_noise=None):
+    def __init__(self, state_from, state_to, length=None, shift_dir=None, fade_label=None, fade_noise=None):
         self.state_to = state_to
         state_to.draw()
         self.image_to = snapshot()
@@ -23,7 +23,7 @@ class Transition(Screen):
         self.image_from = snapshot()
 
         self.frame = 0
-        self.length = length
+        self.length = FPS//2
         self.label = ''
 
         if shift_dir:
@@ -42,6 +42,9 @@ class Transition(Screen):
         else:
             self.animation = self.cut
             self.length = 1
+
+        if length:
+            self.length = length
 
     def draw(self):
         self.animation()
