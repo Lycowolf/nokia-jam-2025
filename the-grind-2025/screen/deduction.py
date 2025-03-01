@@ -10,6 +10,7 @@ from .victory import Victory
 import game_state
 from .transition import Transition
 from misc_types import Way
+from .lore import show_encyclopedia
 
 class DeductionScreen(SmartText):
     last = None
@@ -62,6 +63,9 @@ class DeductionScreen(SmartText):
 
         if pressed(Map.switch):
             return Transition(self, game_state.last_investigation, fade_label="Investigation")
+
+        if pressed(Map.lore):
+            return show_encyclopedia(self)
 
         return self
 

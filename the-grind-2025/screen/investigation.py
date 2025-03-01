@@ -7,6 +7,7 @@ from .item import ItemScreen
 import game_state
 from misc_types import Way
 from constants import *
+from .lore import show_encyclopedia
 
 from .base import Screen
 from .transition import Transition
@@ -51,6 +52,9 @@ class InvestigationScreen(Screen):
 
         if pressed(Map.switch):
             return Transition(self, game_state.last_deduction, fade_label="Deduction")
+
+        if pressed(Map.lore):
+            return show_encyclopedia(self)
 
         return self
 
