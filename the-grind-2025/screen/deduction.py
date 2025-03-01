@@ -15,10 +15,10 @@ from .lore import show_encyclopedia
 class DeductionScreen(SmartText):
     last = None
 
-    def __init__(self, smart_text, word_set, solutions):
+    def __init__(self, smart_text: str, word_set: list[str], solutions: list[str]):
         super().__init__(smart_text,
                          [word_set[0] for _ in range(smart_text.count(SMART_TEXT_MARKER))],
-                         word_set)
+                         set(word_set))
 
         self.solutions = solutions
 
