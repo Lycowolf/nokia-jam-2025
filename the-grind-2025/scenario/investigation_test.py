@@ -1,7 +1,6 @@
 from screen import InvestigationScreen, StoryScreen, DeductionScreen
 import game_state
-from misc_types import Way
-from . import build_scenario_graph, build_deduction_links
+from .tools import build_scenario_graph, build_deduction_links
 
 def setup_test_scenario(skip_intro=False):
 

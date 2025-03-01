@@ -1,6 +1,6 @@
 import game_state
 from screen import InvestigationScreen, StoryScreen, DeductionScreen
-from . import build_scenario_graph, build_deduction_links
+from .tools import build_scenario_graph, build_deduction_links
 
 def setup_scenario():
     screens = [

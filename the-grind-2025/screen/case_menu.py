@@ -10,11 +10,7 @@ from . import Screen, Transition
 class CaseMenuScreen(Screen):
     def __init__(self):
         self.current = 0
-        self.cases = [
-            ('Tutorial', scenario.tutorial.setup_scenario),
-            ('Haunted mansion', scenario.haunted_mansion.setup_scenario),
-            ('Deadly theatrics', scenario.investigation_test.setup_test_scenario),
-        ]
+        self.cases = scenario.cases
 
     def draw(self):
         pyxel.cls(BACKGROUND)

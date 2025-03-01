@@ -1,7 +1,7 @@
 import game_state
 from screen import InvestigationScreen, StoryScreen, DeductionScreen
 from screen.transition import Transition
-from . import build_scenario_graph, build_deduction_links
+from .tools import build_scenario_graph, build_deduction_links
 
 def setup_scenario(skip_intro=False):
     screens = [
