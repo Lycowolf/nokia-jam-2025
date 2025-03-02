@@ -17,7 +17,7 @@ def setup_scenario(skip_intro=False):
                                 ('Other sword', 'To the side of Mador lies another iron sword.'),
                                 ('Broken chandelier', 'On the side, there is an unreasonably massive and fancy prop chandelier. It is broken, but the rope'
                                                       'that was holding it seems intact.'
-                                                      'It was moved when they discovered the body. One of the spokes is bent. Nearby  and there'
+                                                      'It was moved when they discovered the body. One of the spokes is bent and there'
                                                       'are noticeable traces of impact. ')
                             ]),
         InvestigationScreen('backstage', 'Backstage',
@@ -56,7 +56,7 @@ def setup_scenario(skip_intro=False):
                                                      
                                                      The chest is covered in dust, but was opened recently."""),
                                 ('Opened dresser', """One of the big dressers is partially open. Inside there is bunch of victorian clothing and, prominently,'
-                                                   'a big black came that would make Bram Stoker proud. 
+                                                   'a big black cane that would make Bram Stoker proud.
                                                    
                                                    Under the clothes, there is a box with miscellaneous props - pistols, a bible, fake teeth, and
                                                    a bottle of fake blood. Unlike others, the bottle was stored haphazardly and blood residue has stained other props.
@@ -74,7 +74,7 @@ def setup_scenario(skip_intro=False):
                                 
                                 The theatre world has just recovered after a tragic death of Daniel Rider, who suffered a tragic accident
                                 on the night of the general rehearsal of the newest interpretation of Orlando Furioso. His indomitable
-                                colleagues are not coved by hostile fate, and the renewed opening is expected in the upcoming days.
+                                colleagues are not cowed by hostile fate, and the renewed opening is expected in the upcoming days.
                                 The replacement actor turned new main star, Carol Reyes, seems not too perturbed by the
                                 rumors of the script being cursed.
                                 
