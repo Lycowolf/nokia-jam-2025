@@ -1,4 +1,4 @@
-from screen import InvestigationScreen, StoryScreen, DeductionScreen
+from screen import InvestigationScreen, StoryScreen, DeductionScreen, Transition
 import game_state
 from .tools import build_scenario_graph, build_deduction_links
 
@@ -214,6 +214,7 @@ def setup_scenario(skip_intro=False):
                             "But it seems like I am the only one to take this seriously. Of course I'll go.",
                             "With what they pay me, I might even afford a ticket for the opening night.",
                         ])
+    intro.next = Transition(intro, intro.next, fade_label="Investigation")
 
     words = ["-----", 'Felicity', 'Diaz', 'Norman', 'Wagner', 'Johannes', 'Meyer', 'Leo', 'Reyes', 'Daniel', 'Rider', 'Sam', 'Wright',
              'theatre', 'practice', 'duel', 'swordplay scene', 'observed', 'killed', 'prohibited', 'mope', 'hide', 'camera', 'chandelier',
