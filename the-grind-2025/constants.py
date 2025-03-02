@@ -2,7 +2,10 @@ import math
 
 SCREEN_W = 84
 SCREEN_H = 48
+KEYBOARD_W = 84
+KEYBOARD_H = 49
 DISPLAY_SCALE = 6
+
 FPS = 15
 
 PALETTES = {"original", "harsh", "gray"}

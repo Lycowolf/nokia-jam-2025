@@ -23,7 +23,7 @@ class Transition(Screen):
         self.image_from = snapshot()
 
         self.frame = 0
-        self.length = FPS//2
+        self.length = FPS // 2
         self.label = ''
 
         if shift_dir:

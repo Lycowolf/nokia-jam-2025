@@ -23,9 +23,6 @@ class Title(Screen):
 
     def __init__(self):
         super().__init__()
-        pyxel.load("assets/images.pyxres")
-        ui.switch_palette(CHOSEN_PALETTE[0])
-
 
     def update(self) -> Screen:
         self.timer -= 1
