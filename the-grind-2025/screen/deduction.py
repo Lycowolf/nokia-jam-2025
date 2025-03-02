@@ -5,8 +5,8 @@ import sound
 from ui import draw_wrapped_text, draw_text_row, draw_smart_text
 from input import btnp as pressed, Map
 from constants import SMART_TEXT_MARKER, SCREEN_H
+from .endings import Victory
 from .smart_text import SmartText
-from .victory import Victory
 import game_state
 from .transition import Transition
 from misc_types import Way

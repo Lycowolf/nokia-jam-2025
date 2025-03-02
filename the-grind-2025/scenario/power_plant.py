@@ -1,12 +1,6 @@
-from typing import Self
-
-import pyxel
-
 import game_state
-import ui
-from constants import BACKGROUND, MIDDLE_ROW
-from screen import InvestigationScreen, StoryScreen, DeductionScreen, DeductionEndScreen, SmartText, Victory, Screen
-from screen.game_over import GameOverScreen
+from screen import InvestigationScreen, StoryScreen, DeductionScreen, DeductionEndScreen, SmartText, Victory
+from screen.endings import Unsolved, GameOverScreen
 from screen.transition import Transition
 from .tools import build_scenario_graph, build_deduction_links
 from misc_types import Way
@@ -41,7 +35,7 @@ Hints Emily:
 game_over_text = "You fall to your death\nKillian's ghost laughs"
 lift_death_text = "The lift cable snaps\nEmergency brakes fail\n" + game_over_text
 dam_death_text = "You walk over the dam\nA strong wind gust blows\n" + game_over_text
-catwalks_death_text = "The iron structure breaks\nThe floor gives out\n" + game_over_text
+catwalks_death_text = "Iron structure breaks\nThe floor gives out\n" + game_over_text
 
 def setup_scenario(skip_intro=False):
     screens = [
@@ -71,7 +65,7 @@ def setup_scenario(skip_intro=False):
                             objects=[
                                 ('Lift', "A small cargo lift. The depth under it makes me uneasy."),
                                 ('Dam', "It seemed smaller on the map. Iron railings on both sides."),
-                                ('Manager', "\"Please, hurry! There's a lift directly to the generator room, lets use it.\""),
+                                ('Manager', "\"Please, hurry! The lift goes directly to the generator room, lets use it.\""),
                             ]),
         InvestigationScreen('lift investigation',
                             "The lift to the surface ↑. It feels claustrophobic. Your phone beeps.",
@@ -87,8 +81,8 @@ def setup_scenario(skip_intro=False):
                                 ('Generators', """Four generators loudly turn flow of water to flow of electricity.
                                                Their turbines spin somewhere inside the dam wall, adding soft vibrations to the ambiance.
                                                
-                                               Generators 1 to 3 were recently renovated, though the generator 3's cover is already visibly dented
-                                               roughly at shoulder height. 
+                                               Generators 1 to 3 were recently renovated, though the generator 3's cover already has a visible
+                                               dent roughly at shoulder height. 
                                                
                                                Generator 4 is scratched and dented everywhere, still awaiting its new coat of paint."""),
 
@@ -101,7 +95,7 @@ def setup_scenario(skip_intro=False):
                                 "Hello Mr. Detective. I was doing the routine checks and measurements on the generator 4, when Victor came to me
                                 and started shouting about Mark.
                                 
-                                No, I was focusing at work, I didn't see it happen. Sorry. Didn't hear either, we have to wear ear protection."
+                                No, I was focusing at my work, I didn't see it happen. Sorry. Didn't hear either, we have to wear ear protection."
                                 
                                 She points at a wheeled rack full of test equipment nearby."""),
 
@@ -206,7 +200,7 @@ def setup_scenario(skip_intro=False):
     inv_scr.exits[Way.up] = ConfirmationScreen(inv_scr, GameOverScreen(lift_death_text), "Use the lift?")
     del graph["lift crash"]
     inv_scr = graph["catwalks"]
-    inv_scr.exits[Way.up] = ConfirmationScreen(inv_scr, GameOverScreen(catwalks_death_text), "Go over the catwalks?")
+    inv_scr.exits[Way.down] = ConfirmationScreen(inv_scr, GameOverScreen(catwalks_death_text), "Go over the catwalks?")
     del graph["catwalks fall"]
 
     words = [
@@ -228,7 +222,7 @@ def setup_scenario(skip_intro=False):
                 if solved:
                     return Victory()
                 else:
-                    return GotAway()
+                    return Unsolved("you are safe")
             elif decision == "leave alone":
                 return GameOverScreen(dam_death_text)
             elif decision == "leave with others":
@@ -250,9 +244,9 @@ def setup_scenario(skip_intro=False):
                                     Samuel was working on {}. He {} notice Mark's death because he was {}.""", words,
                         [
                             "grid tests", "end", "generator 3", "did", "the murderer", "ceiling inspection",
-                            "looking away", "foreman duties", "didn't", "asleep"
+                            "didn't", "looking away", "foreman duties", "didn't", "asleep"
                          ]),
-        DeductionScreen("Mark was {} when his {} was caught by {} that {} his head against "
+        DeductionScreen("Mark was {}: his {} was caught by {} that {} his head against "
                         "the {} because he {}.", words,
                         # herring: an accident, his shirt, gen. shaft, smashed, gen. shaft, was careless
                         ["murdered", "head", "Emily", "smashed", "generator cover", "angered her"]),
@@ -286,11 +280,3 @@ def setup_scenario(skip_intro=False):
         return graph['entry']
     else:
         return intro
-
-class GotAway(Screen):
-    def update(self) -> Self:
-        return self
-    def draw(self):
-        pyxel.cls(BACKGROUND)
-        ui.draw_centered_text_row(MIDDLE_ROW - 1, "CASE UNSOLVED")
-        ui.draw_centered_text_row(MIDDLE_ROW + 1, "you are safe")

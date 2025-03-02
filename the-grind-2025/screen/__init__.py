@@ -5,7 +5,7 @@ from .search_menu import SearchMenuScreen
 from .story import StoryScreen
 from .deduction import DeductionScreen
 from .deduction_end import DeductionEndScreen
-from .victory import Victory
+from .endings import Victory
 from .smart_text import SmartText
 from .settings import Settings
 from .transition import Transition
