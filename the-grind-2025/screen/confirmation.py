@@ -3,6 +3,7 @@ from typing import Self
 import pyxel
 
 from input import Map, btnp as pressed
+from .transition import Transition
 from .base import Screen
 from constants import *
 from ui import draw_text_row, font
@@ -23,7 +24,7 @@ class ConfirmationScreen(Screen):
 
         if pressed(Map.action):
             if self.current == 0:
-                return self.next
+                return Transition(self, self.next, fade_noise="light")
             else:
                 return self.prev
 

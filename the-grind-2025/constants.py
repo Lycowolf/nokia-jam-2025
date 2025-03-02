@@ -12,7 +12,7 @@ FOREGROUND = 0
 
 # this font is special: Basic Latin (u0020 - u007F) glyphs/codepoints are copied to Private Use Area (uE020 - uE07F)
 # end black/white inverted
-FONT = "assets/simple-6px.bdf"
+FONT = "assets/simple-6px-alt.bdf"
 FONT_HEIGHT = 6
 FONT_INVERTED_OFFSET = 0xE000
 # half a line at the top and the bottom is reserved for UI

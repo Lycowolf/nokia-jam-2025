@@ -13,20 +13,20 @@ def setup_scenario(skip_intro=False):
                                  """ "Finally you are here! It's a real mystery you know? How could they die alone in 
                                  a locked room? Such stupid stunt!"
                                  
-                                 "The observers are waiting for you on top of the stairs."""),
-                                ('Stair', 'A creaky old stairway, just like from a Hollywood movie.'),
+                                 "The observers are waiting for you on top of the stairs. We unsealed the door about a hour ago."""),
+                                ('Stair', 'A creaky old stairway, just like in a Hollywood movie.'),
                                 ('Dust', 'Things here are dusty, as expected in this kind of a mansion.'),
                             ]),
         InvestigationScreen('hallway',
                             "The policewoman led you into a run-down hallway, illuminated by a camping lantern.",
                             down='entry', up='above stair'),
         InvestigationScreen('above stair',
-                            "A man and a woman with bags under their eyes are waiting in front of a closed door covered in police tape. "
+                            "A man and a woman with bags under their eyes are waiting in front of a closed door. "
                             "An ornate key sits in the keyhole.",
                             objects=[
                                 ("Man", """The man is about fifty, his face pale.
 
-                                                "Hello mr. detective! I am Peter Stone. The door was closed the whole night, we both stayed 
+                                                "Hello mr. detective! I am Peter Stone. The door was closed and sealed the whole night, we both stayed 
                                                 awake the whole time, to make sure Mr. Fowler, I mean the victim, wouldn't leave. 
                                                 That was the bet you know.
 
@@ -37,16 +37,19 @@ def setup_scenario(skip_intro=False):
                                                 He looks at the door with thousand-mile stare."""),
                                 ("Woman", """The woman is younger, maybe twenty-five. Her eyes are red and her make-up marred by tears.
 
-                                                "Good morning sir, I am Jill Palowski. We found Keith in there in the morning, we didn't move anything.
-
+                                                "Good morning sir, I am Jill Palowski. Keith wouldn't respond to us in the morning,
+                                                not even pick up his phone, so we called the police.
+                                                
                                                 Yes, he stayed there the whole night. He didn't believe in ghosts, the poor fool.
+                                                
+                                                We didn't move anything. The policewomen here cut the seals.
                                                 
                                                 We heard the house creaking, but that's all."
 
                                                 She cleans her nose and wipes her eyes.
                                       """),
-                                ("Door", """Big, solid wooden door. Probably older that you are."""),
-                                ("Key", """A massive, antique key of finely wrought metal. This lock won't be opening quietly.""")
+                                ("Door", """Big, solid wooden door. Probably older that you are. Strips of paper were sealing it, now cut apart."""),
+                                ("Lock and key", """A massive, antique key of finely wrought metal in a matching lock. It won't be opening quietly.""")
                             ],
                             down="hallway", up="room"),
         InvestigationScreen('room',
@@ -55,7 +58,6 @@ def setup_scenario(skip_intro=False):
                                 ("Door", """Big, solid wooden door. Probably older that you are."""),
                                 ("Armor", "A suite of a medieval armor, complete with a helmet. It would look nice holding a spear. "),
                                 ("Body", "Sure looks dead. You can't see much from the doorway, you need to step closer. "),
-
                             ],
                             down="above stair", right='body'),
         InvestigationScreen('body',"""A body wrapped in a sleeping bag lies on the floor in a pool of blood, impaled by a spear.""",
@@ -80,18 +82,26 @@ def setup_scenario(skip_intro=False):
     graph = build_scenario_graph(screens)
 
     words = [
-        "-----", "victim", "policewoman", "ghost", "Peter", "Jill", "Keith", "Stone", "Palowski", "Fowler", "kill", "stay", "observe",
-        "locked", "impaled", "front", "back", "called", "police", "made a bet", "night", "morning", "armor", "door", "key", "spear"
+        "-----", "victim", "policewoman", "ghost", "Peter Stone", "Jill Palowski", "Keith Fowler", "kill", "stay", "observers",
+        "locked", "impaled", "front", "back", "called", "police", "made a bet", "night", "morning", "armor", "door", "key", "spear",
+        "could", "couldn't", "waited outside", "went inside", "never saw"
     ]
     deductions = [
-        DeductionScreen("{} {}, the victim, {} to {} in a haunted mansion through the {}.", words,
-                        ["Keith", "Fowler", "made a bet", "stay", "night"]),
-        DeductionScreen("Mr. {} {} and Mrs. {} {} offered to {} the victim would {} until {}.", words,
-                        ["Peter", "Stone", "Jill", "Palowski", "observe", "stay", "morning"]),
+        DeductionScreen("{}, the victim, {} to {} in a haunted mansion through the {}.", words,
+                        ["Keith Fowler", "made a bet", "stay", "night"]),
+        DeductionScreen("Mr. {} and Mrs. {} offered to act as {}, making sure the victim would {} until {}.", words,
+                        ["Peter Stone", "Jill Palowski", "observers", "stay", "morning"]),
         DeductionScreen("They remained outside, {} the {} and waited until {}. After discovering the body, they {} the {}.", words,
                         ["locked", "door", "morning", "called", "police"]
                         ),
-        DeductionScreen("The {} decided to kill the victim. They went and {} him from the {} with the {}.", words,
+        DeductionScreen("""Jill {} commit the murder because she {} the room during the night.
+        
+        Peter {} commit the murder because he {} the room during the night.
+        
+        The policewoman {} commit the murder because she {} the room during the night.""",
+                        words,
+                        ["couldn't", "waited outside", "couldn't", "waited outside", "couldn't", "never saw",]),
+        DeductionScreen("The {} killed the victim. They went and {} him from the {} with the {}.", words,
                         ["ghost", "impaled", "back", "spear"]),
     ]
     build_deduction_links(deductions)

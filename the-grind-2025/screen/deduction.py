@@ -5,8 +5,8 @@ import sound
 from ui import draw_wrapped_text, draw_text_row, draw_smart_text
 from input import btnp as pressed, Map
 from constants import SMART_TEXT_MARKER, SCREEN_H
+from .endings import Victory
 from .smart_text import SmartText
-from .victory import Victory
 import game_state
 from .transition import Transition
 from misc_types import Way
@@ -16,10 +16,10 @@ from .confirmation import ConfirmationScreen
 class DeductionScreen(SmartText):
     last = None
 
-    def __init__(self, smart_text, word_set, solutions):
+    def __init__(self, smart_text: str, word_set: list[str], solutions: list[str]):
         super().__init__(smart_text,
                          [word_set[0] for _ in range(smart_text.count(SMART_TEXT_MARKER))],
-                         word_set)
+                         set(word_set))
 
         self.solutions = solutions
 
