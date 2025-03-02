@@ -53,12 +53,12 @@ def setup_scenario(skip_intro=False):
                                                   Renaissance rapiers, even Turkish saber and some fantasy pieces straight out of Lord of the Rings.
                                                   All of them are the safety type, either collapsible or foam. Even full-force hit by those would not
                                                   cause serious hurt, but a bruise is still possible if care is not taken."""),
-                                ('Old wooden chest', """There is an old chest. Inside are pieces of a knight costumes - chainmail armor, tabards,'
-                                                     'and an unusually realistic crown. On the top, there are two leather sword sheathes. These are empty.
+                                ('Old wooden chest', """There is an old chest. Inside are pieces of a knight costumes - chainmail armor, tabards,
+                                                     and an unusually realistic crown. On the top, there are two leather sword sheathes. These are empty.
                                                      
                                                      The chest is covered in dust, but was opened recently."""),
-                                ('Opened dresser', """One of the big dressers is partially open. Inside there is bunch of victorian clothing and, prominently,'
-                                                   'a big black cape that would make Bram Stoker proud.
+                                ('Opened dresser', """One of the big dressers is partially open. Inside there is bunch of victorian clothing and, prominently,
+                                                   a big black cape that would make Bram Stoker proud.
                                                    
                                                    Under the clothes, there is a box with miscellaneous props - pistols, a bible, fake teeth, and
                                                    a bottle of fake blood. Unlike others, the bottle was stored haphazardly and blood residue has stained other props.
@@ -209,15 +209,15 @@ def setup_scenario(skip_intro=False):
                         ])
 
     words = ["-----", 'Felicity', 'Diaz', 'Norman', 'Wagner', 'Johannes', 'Meyer', 'Leo', 'Reyes', 'Daniel', 'Rider', 'Sam', 'Wright',
-             'theatre', 'practice', 'duel', 'swordplay scene', 'observed', 'killed', 'prohibited', 'mope', 'camera', 'chandelier',
+             'theatre', 'practice', 'duel', 'swordplay scene', 'observed', 'killed', 'prohibited', 'mope', 'hide', 'camera', 'chandelier',
              'rigging controls', 'rigging pulley',  'ghost', 'fall', 'death', 'head', 'chest', 'abdomen', 'leg', 'washed', 'swapped', 'prop sword',
-             'real', 'knife', 'storage', 'memory card', 'fake blood', 'removed', 'accident', 'supervision']
+             'real', 'knife', 'stage', 'storage', 'memory card', 'fake blood', 'removed', 'accident', 'supervision']
     deductions = [
         DeductionScreen("In the evening before grand rehearsal, {} {} asked {} {} to meet at the {} in secret to {} the {}. ", words,
                         ['Leo', 'Reyes', 'Johannes', 'Meyer', 'theatre', 'practice', 'swordplay scene']),
         DeductionScreen("Unknowingly, they were {} by {} {} who was at the {} to {}.", words,
                         ['observed', 'Norman', 'Wagner', 'theatre', 'mope']),
-        DeductionScreen("{} {} recorded the scene on {}. To get better recording, they practiced in full costume and"
+        DeductionScreen("{} {} recorded the scene on {}. To get better recording, they practiced in full costume and "
                         "set up the props, including the big {}. They operated the {} despite being {} by {} {}.", words,
                         ['Leo', 'Reyes', 'camera', 'chandelier', 'rigging controls', 'prohibited', 'Sam', 'Wright']),
         DeductionScreen("During the {}, the {} of {} {} interfered with the {}, which caused the {} to {}. "
@@ -238,9 +238,9 @@ def setup_scenario(skip_intro=False):
                         ['Leo', 'Reyes', 'chandelier', 'Daniel', 'Rider']),
         DeductionScreen("Summary: Second victim was {} {}. They were killed with {} by {} {}.", words,
                         ['Johannes', 'Meyer', 'knife', 'Norman', 'Wagner']),
-        DeductionScreen('Supernatural {} involved. {} {} was a {}.',
-                        ['-----', 'was', 'was not', 'The first', 'The second', 'killer', 'victim', 'poltergeist', 'normal human', 'phantom of the opera'],
-                        ['was', 'The first', 'killer', 'poltergeist'])
+        DeductionScreen('Supernatural {} involved. The {} {} was a {}.',
+                        ['-----', 'was', 'was not', 'first', 'second', 'killer', 'victim', 'poltergeist', 'normal human', 'phantom of the opera'],
+                        ['was', 'first', 'killer', 'poltergeist'])
     ]
     build_deduction_links(deductions)
 
