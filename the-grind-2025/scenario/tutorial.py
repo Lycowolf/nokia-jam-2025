@@ -43,8 +43,8 @@ def setup_scenario():
                         ['choose', 'selection', 'guess'], ["choose", "guess", "selection"]),
         DeductionScreen("When you guess all the words on a screen correctly, the screen is {}.", ['-----', 'locked'], ["locked"]),
         DeductionScreen("The indicator on the bottom shows which {} are already solved. This one is.", ["screens"], ["screens"]),
-        # DeductionScreen("When all the screens are solved, you {}!", ["-----", "win", "lose"], ["win"]),
-        DeductionEndScreen("When all the screens are solved, you {}!", ["-----", "win", "lose"], select_end_screen),
+        DeductionScreen("When all the screens are solved, you {}!", ["-----", "win", "lose"], ["win"]),
+        # DeductionEndScreen("When all the screens are solved, you {}!", ["-----", "win", "lose"], select_end_screen),
     ]
     build_deduction_links(deductions)
 
