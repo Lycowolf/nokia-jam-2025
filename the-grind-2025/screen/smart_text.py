@@ -24,6 +24,8 @@ class SmartText(Screen):
         if not known_words:
             self.menu_enabled = False
 
+        self.updated_flag = False
+
     def is_top(self):
         return self.scroll == 0
 
@@ -31,11 +33,20 @@ class SmartText(Screen):
         _, max_row = layout_smart_text(self.text, self.words)
         return self.scroll >= max_row - TEXT_ROWS + 1
 
+    def was_updated(self, clear=True):
+        if self.updated_flag:
+            if clear:
+                self.updated_flag = False
+            return True
+        else:
+            return False
+
     def update(self) -> Screen:
         self.frame = (self.frame + 1) % FPS
         def on_word_selected(word):
             self.words[self.selected_word_idx] = word
             sound.confirm()
+            self.updated_flag = True
 
         if btnp(Map.up):
             prev_row, on_screen, _, _ = words_on_screen(self.text, self.words, self.scroll)

@@ -26,34 +26,39 @@ class DeductionScreen(SmartText):
         self.next = self
         self.solved = False
 
+    def mark_solved(self):
+        sound.deduction_success()
+        self.solved = True
+
+        # fix words, remove selection fields
+        self.menu_enabled = False
+        self.text = self.text.format(*self.words)
+
     def draw(self):
         super().draw()
 
         draw_progress(game_state.deduction_progress(self))
 
         if self.correct():
-            if not self.solved:
-                sound.deduction_success()
-                self.solved = True
             draw_text_row(6, "ok", x_off=-3)
 
     def correct(self):
         return self.words == self.solutions
 
     def update(self) -> Self:
+        if not self.solved and self.was_updated() and self.correct():
+            self.mark_solved()
+
+            if game_state.is_everything_solved():
+                return Victory()
+
         new_state = super().update()
         if new_state != self:
             return new_state
 
         game_state.last_deduction = self
 
-        if self.menu_enabled and self.correct():
-            self.menu_enabled = False
-            # fix words, remove selection fields
-            self.text = self.text.format(*self.words)
 
-            if game_state.is_everything_solved():
-                return Victory()
 
         if pressed(Map.left):
             return Transition(self, self.prev, shift_dir=Way.left)

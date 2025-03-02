@@ -4,8 +4,10 @@ from .item import ItemScreen
 from .search_menu import SearchMenuScreen
 from .story import StoryScreen
 from .deduction import DeductionScreen
+from .deduction_end import DeductionEndScreen
 from .victory import Victory
 from .smart_text import SmartText
 from .settings import Settings
 from .transition import Transition
 from .case_menu import CaseMenuScreen
+from .confirmation import ConfirmationScreen

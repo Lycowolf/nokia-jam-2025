@@ -1,5 +1,5 @@
 import game_state
-from screen import InvestigationScreen, StoryScreen, DeductionScreen
+from screen import InvestigationScreen, StoryScreen, DeductionScreen, DeductionEndScreen, Victory
 from .tools import build_scenario_graph, build_deduction_links
 
 def setup_scenario():
@@ -31,13 +31,20 @@ def setup_scenario():
     ]
     graph = build_scenario_graph(screens)
 
+    def select_end_screen(smart_text):
+        if smart_text.words[-1] == 'win':
+            return Victory()
+        else:
+            return screens[0]  # return to the beginning
+
     deductions = [
         DeductionScreen("This is Deduction mode. Use ← or → to switch {}, press A to return to Investigation mode.", ["screens"], ["screens"]),
         DeductionScreen("Use ↑ and ↓ to {} keyword slot. Use Space to {} keyword. You can change your {} without limit.",
                         ['choose', 'selection', 'guess'], ["choose", "guess", "selection"]),
         DeductionScreen("When you guess all the words on a screen correctly, the screen is {}.", ['-----', 'locked'], ["locked"]),
         DeductionScreen("The indicator on the bottom shows which {} are already solved. This one is.", ["screens"], ["screens"]),
-        DeductionScreen("When all the screens are solved, you {}!", ["-----", "win", "lose"], ["win"]),
+        # DeductionScreen("When all the screens are solved, you {}!", ["-----", "win", "lose"], ["win"]),
+        DeductionEndScreen("When all the screens are solved, you {}!", ["-----", "win", "lose"], select_end_screen),
     ]
     build_deduction_links(deductions)
 
