@@ -68,8 +68,8 @@ def setup_scenario(skip_intro=False):
         InvestigationScreen('lobby', 'Theatre lobby. Standees and posters galore. An easy-going policeman is waiting for you.',
                             left='stage', right='corridor 1', up='bar',
                             objects=[
-                                ('Poster', 'A poster for upcoming premiere of Orlando Furioso. Photos of Reyes(Orlando), Wagner(Modor) and'
-                                           'Diaz(Angelica) are displayed prominently as the main trio.'),
+                                ('Poster', 'A poster for upcoming premiere of Orlando Furioso. Photos of Reyes (Orlando), Wagner (Modor) and'
+                                           'Diaz (Angelica) are displayed prominently as the main trio.'),
                                 ('Older posters', 'Posters of many previous plays remain in the lobby. It seems this company favours the classics.'
                                                   'Dracula, Cleopatra, Oedipus Rex, and Le morte d\'Arthur are some of the recent ones.'),
                                 ('Newspaper clippings',"""The unlucky play finally prepares for the first opening!
@@ -110,17 +110,24 @@ def setup_scenario(skip_intro=False):
                                     
                                     Do not worry, it's not my first time and won't be the last. You won't even notice it
                                      on the rehearsal this evening."""),
-                                ('Actress', """The main 
-                                Felicity Diaz, a.k.a. Angelica. Totally done with this play
+                                ('Actress', """The actress in the leading role, Felicity Diaz, a.k.a. Angelica, is drinking
+                                with a disgusted expression on her face.
+
+                                "Before you ask anything, Detective, let me say I am done with this role. Like, totally done.
+                                I don't know why I let my agent convince me to play in this cursed charade, I should have
+                                seen all the problems a mile away. I am cutting my contract tomorrow morning.
                                 
-                                - THe play is cursed and was never a good idea. Lots of problems. Better to cut losses and do something else.
-                                - Rider was very hung on the Orlando role
-                                - Rider and Reyes were very combative. They could shove it during the play, but practices were bad.
-                                - Wagner was a weirdo who tended to visit the theater at night, for "atmosphere". More so after the accident
-                                - I think Rider and Wagner were an item? That were the rumors anyway
-                                - Regardless, Wagner took his death very badly 
-                                 
-                                """),
+                                What problems? All of them! Rider was hung on the Orlando role, but then acts all surprised
+                                when Reyes shows up as a backup. What was he thinking? And then he vents on Reyes during practice, 
+                                all the time, as if he was a director or whatever. It was insufferable. At least Rider is enough
+                                of a professional to keep shut on scene.
+                                
+                                And then the weirdo Wagner going here at night. 'For atmosphere.' I don't know what 
+                                is this bullshit, prepare for your role and get a sleep when you can. Haven't Wagner seen
+                                enough theatres? We had several police calls because he kept sneaking in all the time.
+                                Did he get a kick because of the murder or what.
+                                
+                                Sorry, but that's all I got. Now piss off and let me finish my drink." """),
                                 ('Theater technician',
                                  """Sam Wright, theatre technician. Young, nervous looking fellow. He looks he will start
                                  screaming at any moment.
