@@ -9,16 +9,16 @@ def setup_scenario(skip_intro=False):
                             left='backstage', down='auditorium', right='lobby',
                             objects=[
                                 ('Stage', 'The stage is set for epic sword fight scene. Set pieces are placed and the stage lights are still on.'),
-                                ('Orlando', 'The body of Reyes, dressed in the full costume of the protagonist Orlando. There is a big bruise on his head,'
+                                ('Orlando', 'The body of Reyes, dressed in the full costume of the protagonist Orlando. There is a big bruise on his head, '
                                            'some lacerations, and his neck is in unnatural position. A bloody sword is lying close to the body'),
                                 ('Mador', 'This body is Meyer, dressed in the costume of Saracen warrior Mador. He has a stab wound in the '
                                           'abdomen, and there is lot of blood.'),
-                                ('Bloody sword', 'Near Orlando\'s hand, there is an solid iron sword. Nearly half the blade is covered in blood.'
+                                ('Bloody sword', 'Near Orlando\'s hand, there is an solid iron sword. Nearly half the blade is covered in blood. '
                                                  'It is still sticky on the underside.'),
                                 ('Other sword', 'To the side of Mador lies another iron sword.'),
-                                ('Broken chandelier', 'On the side, there is an unreasonably massive and fancy prop chandelier. It is broken, but the rope'
-                                                      'that was holding it seems intact.'
-                                                      'It was moved when they discovered the body. One of the spokes is bent and there'
+                                ('Broken chandelier', 'On the side, there is an unreasonably massive and fancy prop chandelier. It is broken, but the rope '
+                                                      'that was holding it seems intact. '
+                                                      'It was moved when they discovered the body. One of the spokes is bent and there '
                                                       'are noticeable traces of impact. ')
                             ]),
         InvestigationScreen('backstage', 'The space behind the curtain. Not much props here, surprisingly. There are controls for operating the rigging.',

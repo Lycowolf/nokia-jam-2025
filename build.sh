@@ -1,6 +1,7 @@
 #!/bin/bash
 
 rm -r the-grind-2025.zip build/
+find the-grind-2025 -name "*.pyc" -delete
 #mkdir build
 #pyxel package the-grind-2025/ the-grind-2025/main.py
 #unzip -d build the-grind-2025.pyxapp
