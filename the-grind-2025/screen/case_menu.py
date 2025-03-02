@@ -6,11 +6,13 @@ from ui import draw_wrapped_text, draw_text_row, switch_palette
 from input import btnp as pressed, Map
 import scenario
 from . import Screen, Transition
+import game_state
 
 class CaseMenuScreen(Screen):
     def __init__(self):
         self.current = 0
         self.cases = scenario.cases
+        game_state.register_case_menu(self)
 
     def draw(self):
         pyxel.cls(BACKGROUND)

@@ -57,4 +57,7 @@ class DeductionEndScreen(SmartText):
         if pressed(Map.lore):
             return show_encyclopedia(self)
 
+        if pressed(Map.main_menu):
+            return ConfirmationScreen(self, game_state.case_menu, 'Return to case menu?')
+
         return self

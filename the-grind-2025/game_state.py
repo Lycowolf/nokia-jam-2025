@@ -4,6 +4,12 @@ last_deduction = None
 deduction_list = []
 investigation_graph = None
 
+case_menu = None
+
+def register_case_menu(menu):
+    global case_menu
+    case_menu = menu
+
 def setup_game_state(investigations, deductions):
     global deduction_list, investigation_graph, last_investigation, last_deduction
     deduction_list = deductions

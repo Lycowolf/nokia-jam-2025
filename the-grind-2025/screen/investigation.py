@@ -11,6 +11,7 @@ from .lore import show_encyclopedia
 
 from .base import Screen
 from .transition import Transition
+from .confirmation import ConfirmationScreen
 
 class InvestigationScreen(Screen):
     last = None
@@ -55,6 +56,9 @@ class InvestigationScreen(Screen):
 
         if pressed(Map.lore):
             return show_encyclopedia(self)
+
+        if pressed(Map.main_menu):
+            return ConfirmationScreen(self, game_state.case_menu, 'Return to case menu?')
 
         return self
 

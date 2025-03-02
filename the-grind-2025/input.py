@@ -12,6 +12,7 @@ class Map:
     back = [pyxel.KEY_KP_MULTIPLY, pyxel.KEY_Z, pyxel.KEY_KP_0]
     switch = [pyxel.KEY_KP_DIVIDE, pyxel.KEY_TAB, pyxel.KEY_LSHIFT, pyxel.KEY_A, pyxel.KEY_KP_7]
     lore = [pyxel.KEY_L, pyxel.KEY_E, pyxel.KEY_S, pyxel.KEY_KP_9]
+    main_menu = [pyxel.KEY_Q, pyxel.KEY_KP_3]
 
     way_keys = {
         Way.up: up,
