@@ -56,7 +56,7 @@ def setup_scenario(skip_intro=False):
                                                      
                                                      The chest is covered in dust, but was opened recently."""),
                                 ('Opened dresser', """One of the big dressers is partially open. Inside there is bunch of victorian clothing and, prominently,'
-                                                   'a big black cane that would make Bram Stoker proud.
+                                                   'a big black cape that would make Bram Stoker proud.
                                                    
                                                    Under the clothes, there is a box with miscellaneous props - pistols, a bible, fake teeth, and
                                                    a bottle of fake blood. Unlike others, the bottle was stored haphazardly and blood residue has stained other props.
