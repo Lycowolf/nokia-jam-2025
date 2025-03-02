@@ -8,7 +8,11 @@ def build_scenario_graph(screens):
         for way in Way.all():
             out = screen.exits[way]
             if out:
-                screen.exits[way] = graph.get(out, screen)
+                if out in graph:
+                    screen.exits[way] = graph.get(out)
+                else:
+                    print(f'ERROR: screen {screen.name} has exit to {out} which does not exist')
+                    screen.exits[way] = screen
 
     game_state.last_investigation = screens[0]
 
