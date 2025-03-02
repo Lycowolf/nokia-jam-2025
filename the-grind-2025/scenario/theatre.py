@@ -77,7 +77,7 @@ def setup_scenario(skip_intro=False):
                                 The theatre world has just recovered after a tragic death of Daniel Rider, who suffered a tragic accident
                                 on the night of the general rehearsal of the newest interpretation of Orlando Furioso. His indomitable
                                 colleagues are not cowed by hostile fate, and the renewed opening is expected in the upcoming days.
-                                The replacement actor turned new main star, Carol Reyes, seems not too perturbed by the
+                                The replacement actor turned new main star, Leo Reyes, seems not too perturbed by the
                                 rumors of the script being cursed.
                                 
                                 If any ghosts are interested in the play, I invite them to the grand opening. All the rest of you are
@@ -95,11 +95,21 @@ def setup_scenario(skip_intro=False):
                             ]),
         InvestigationScreen('bar', 'Bar. The theatre personnel are gathered here.', down='lobby',
                             objects=[
-                                ('Actor', """Norman Wagner. Does not look like a leading man.
-                                    He looks tired - he is leaning on the bar.
-                                    - is favoring one side, has a bruise on the chest
-                                    - says he got it during practice yesterday, but no big deal
-                                """),
+                                ('Actor', """Norman Wagner. Does not look like a leading man, but has an undeniable charisma.
+                                    He's putting on a friendly face, but you can feel a pain underneath. The work must be hard
+                                     on him - he looks tired, and he can't be older than me. He is leaning on the bar, notably favoring one side. 
+                                    
+                                    Good morning, detective. What a tragedy. If I were a superstitious man, I would really
+                                    start to believe the play is cursed. Almost on the day of the big rehearsal, like before.
+                                    
+                                    No, I missed the whole thing. I left on time yesterday, and came just a moment before.
+                                    Sam has already found it and called the police. 
+                                    
+                                    This? I got bruised yesterday during the fencing practice. We use stage swords, but it can still
+                                    leave you aching if you make a mistake.
+                                    
+                                    Do not worry, it's not my first time and won't be the last. You won't even notice it
+                                     on the rehearsal this evening."""),
                                 ('Actress', """The main 
                                 Felicity Diaz, a.k.a. Angelica. Totally done with this play
                                 
@@ -143,7 +153,7 @@ def setup_scenario(skip_intro=False):
                             '\n             ↑ Diaz, ↓ Women',
                             up='diaz_dressing_room', down='women_dressing_room', left='corridor 2',
                             ),
-        InvestigationScreen('reyes_dressing_room', 'The dressing room of Carol Reyes, the main star. There is a bag on the floor.'
+        InvestigationScreen('reyes_dressing_room', 'The dressing room of Leo Reyes, the main star. There is a bag on the floor.'
                                                    'Someone was changing here recently.',
                             down='corridor 1',
                             objects=[
@@ -165,7 +175,7 @@ def setup_scenario(skip_intro=False):
                                 ('Rucksack', 'A rucksack with a change of clothes.'),
                                 ('Note',  """'As I promised, we will go with you for the premiere. Norman can be an alter, he\'ll deal.
                                 Come to the theater today at the evening, I want to go through the swordplay scene once more before the grand rehearsal.
-                                C. """),
+                                L. """),
                             ]),
         InvestigationScreen('wagner_dressing_room', 'The dressing room of Norman Wagner. Feels like he never left.',
                             up='corridor 1',
@@ -198,21 +208,21 @@ def setup_scenario(skip_intro=False):
                             "With what they pay me, I might even afford a ticket for the opening night.",
                         ])
 
-    words = ["-----", 'Felicity', 'Diaz', 'Norman', 'Wagner', 'Johannes', 'Meyer', 'Carol', 'Reyes', 'Daniel', 'Rider', 'Sam', 'Wright',
+    words = ["-----", 'Felicity', 'Diaz', 'Norman', 'Wagner', 'Johannes', 'Meyer', 'Leo', 'Reyes', 'Daniel', 'Rider', 'Sam', 'Wright',
              'theatre', 'practice', 'duel', 'swordplay scene', 'observed', 'killed', 'prohibited', 'mope', 'camera', 'chandelier',
              'rigging controls', 'rigging pulley',  'ghost', 'fall', 'death', 'head', 'chest', 'abdomen', 'leg', 'washed', 'swapped', 'prop sword',
              'real', 'knife', 'storage', 'memory card', 'fake blood', 'removed', 'accident', 'supervision']
     deductions = [
         DeductionScreen("In the evening before grand rehearsal, {} {} asked {} {} to meet at the {} in secret to {} the {}. ", words,
-                        ['Carol', 'Reyes', 'Johannes', 'Meyer', 'theatre', 'practice', 'swordplay scene']),
+                        ['Leo', 'Reyes', 'Johannes', 'Meyer', 'theatre', 'practice', 'swordplay scene']),
         DeductionScreen("Unknowingly, they were {} by {} {} who was at the {} to {}.", words,
                         ['observed', 'Norman', 'Wagner', 'theatre', 'mope']),
         DeductionScreen("{} {} recorded the scene on {}. To get better recording, they practiced in full costume and"
                         "set up the props, including the big {}. They operated the {} despite being {} by {} {}.", words,
-                        ['Carol', 'Reyes', 'camera', 'chandelier', 'rigging controls', 'prohibited', 'Sam', 'Wright']),
+                        ['Leo', 'Reyes', 'camera', 'chandelier', 'rigging controls', 'prohibited', 'Sam', 'Wright']),
         DeductionScreen("During the {}, the {} of {} {} interfered with the {}, which caused the {} to {}. "
                         "It struck {} {} in the {}, causing his {}.", words,
-                        ['practice', 'ghost', 'Daniel', 'Rider', 'rigging pulley', 'chandelier', 'fall', 'Carol', 'Reyes', 'head', 'death']),
+                        ['practice', 'ghost', 'Daniel', 'Rider', 'rigging pulley', 'chandelier', 'fall', 'Leo', 'Reyes', 'head', 'death']),
         DeductionScreen("At that moment, {} {} ran to the {}. They confronted {} {}, altercation ensued, during which they drew {}."
                         "They were hit by {} in the {}, and their opponent was struct by {} in the {}. ", words,
                         ['Norman', 'Wagner', 'stage', 'Johannes', 'Meyer', 'knife', 'prop sword', 'chest', 'knife', 'abdomen']),
@@ -225,7 +235,7 @@ def setup_scenario(skip_intro=False):
                         " {} were handled without {}.", words,
                         ['Sam', 'Wright', 'accident', 'rigging controls', 'supervision']),
         DeductionScreen("Summary: First victim was {} {}. They were killed with {} by {} {}.", words,
-                        ['Carol', 'Reyes', 'chandelier', 'Daniel', 'Rider']),
+                        ['Leo', 'Reyes', 'chandelier', 'Daniel', 'Rider']),
         DeductionScreen("Summary: Second victim was {} {}. They were killed with {} by {} {}.", words,
                         ['Johannes', 'Meyer', 'knife', 'Norman', 'Wagner']),
         DeductionScreen('Supernatural {} involved. {} {} was a {}.',
