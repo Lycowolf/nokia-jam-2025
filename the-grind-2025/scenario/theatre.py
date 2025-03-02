@@ -8,7 +8,8 @@ def setup_scenario(skip_intro=False):
         InvestigationScreen('stage', "The main stage. There are two bodies in full costume and broken prop chandelier",
                             left='backstage', down='auditorium', right='lobby',
                             objects=[
-                                ('Roland', 'The body of Carol Reyes, dressed in the full costume of the protagonist Orlando. There is a big bruise on his head,'
+                                ('Stage', 'The stage is set for epic sword fight scene. Set pieces are placed and the stage lights are still on.'),
+                                ('Orlando', 'The body of Carol Reyes, dressed in the full costume of the protagonist Orlando. There is a big bruise on his head,'
                                            'some lacerations, and his neck is in unnatural position. A bloody sword is lying close to the body'),
                                 ('Mador', 'The body of Johannes Meyer, dressed in the costume of Saracen warrior Mador. He has a stab wound in the '
                                           'abdomen, and there is lot of blood.'),
@@ -48,9 +49,10 @@ def setup_scenario(skip_intro=False):
                             right='backstage',
                             objects=[
                                 ('Room', 'A respectable-sized room with big mess inside. Most accessed stuf is kept in order, but older props are just laying in heaps.'),
-                                ('Sword cabinet', 'The theater has impressive selection of prop swords. Medieval german swords, '
-                                                  'Renaissance rapiers, even Turkish saber and some fantasy pieces straight out of Lord of the Rings.'
-                                                  'All of them are the safety type, either collapsible or foam.'),
+                                ('Sword cabinet', """The theater has impressive selection of prop swords. Medieval german swords,
+                                                  Renaissance rapiers, even Turkish saber and some fantasy pieces straight out of Lord of the Rings.
+                                                  All of them are the safety type, either collapsible or foam. Even full-force hit by those would not
+                                                  cause serious hurt, but a bruise is still possible if care is not taken."""),
                                 ('Old wooden chest', """There is an old chest. Inside are pieces of a knight costumes - chainmail armor, tabards,'
                                                      'and an unusually realistic crown. On the top, there are two leather sword sheathes. These are empty.
                                                      
@@ -83,13 +85,26 @@ def setup_scenario(skip_intro=False):
                                 
                                 Reyes and his long-standing rivalry with Rider has long been known in the tabloid world, but
                                 that reportedly never impacted their professional collaboration. < more juicy details on page 5 >"""),
-                                ('Police', ''),
+                                ('Police', """
+                                    - Diaz has alibi ?
+                                """),
 
                             ]),
         InvestigationScreen('bar', 'Bar. The actors who discovered the mess are there.', down='lobby',
                             objects=[
-                                ('actor', 'Norman Wagner, our killer of opportunity'),
-                                ('actress', 'Felicity Diaz, a.k.a. Angelica. Done with this play'),
+                                ('actor', 'Norman Wagner, our killer of opportunity'
+                                          '- is favoring one side, has a bruise on the chest'
+                                          '- says he got it during practice yesterday, but no big deal'),
+                                ('actress', """
+                                Felicity Diaz, a.k.a. Angelica. Totally done with this play
+                                
+                                - Rider was very hung on the Orlando role
+                                - Rider and Reyes were very combative. They could shove it during the play, but practices were bad.
+                                - Wagner was a weirdo who tended to visit the theater at night, for "atmosphere". More so after the accident
+                                - I think Rider and Wagner were an item? That were the rumors anyway
+                                - Regardless, Wagner took his death very badly 
+                                 
+                                """),
                                 ('theater technician',
                                  """Sam Wright, theatre technician. Young, nervous looking fellow. He looks he will start
                                  screaming at any moment.
@@ -98,6 +113,9 @@ def setup_scenario(skip_intro=False):
                                  
                                  I told them to never touch the rigging, I told them many times. Do they listen? No.
                                  I know the controls are not that hard to figure out, but it\'s dangerous anyway.
+                                 
+                                 - Daniel knew well how to operate rigging. He taught others some, but not enough
+                                 - Ride was extremely hung on the Orlando role, threw huge fit over Reyes even being an alter 
                                  """),
                             ]),
         InvestigationScreen('corridor 1', 'Non-public part of the theater. Here are dressing rooms for main stars.'
@@ -115,7 +133,11 @@ def setup_scenario(skip_intro=False):
         InvestigationScreen('reyes_dressing_room', '',
                             down='corridor 1',
                             objects=[
-                                ('', ''),
+                                ('Suspicious note', """In the trash, there is crumpled note. It is made by cutout letters from a newspaper,
+                                                    movie kidnapper-style.
+                                                    
+                                                    Drop the role, YOU are NOT worthy of it. IF YOU do not, there will be CONSEQUENCES!!!
+                                                    """),
                             ]),
         InvestigationScreen('meyer_dressing_room', '',
                             down='corridor 2',
@@ -147,13 +169,39 @@ def setup_scenario(skip_intro=False):
                             "With what they pay me, I might even afford a ticket for the thing.",
                         ])
 
-    words = ["-----", ]
+    words = ["-----", 'Felicity', 'Diaz', 'Norman', 'Wagner', 'Johannes', 'Meyer', 'Carol', 'Reyes', 'Daniel', 'Rider', 'Sam', 'Wright',
+             'theatre', 'practice', 'duel', 'swordplay scene', 'observed', 'killed', 'prohibited', 'mope', 'camera', 'chandelier',
+             'rigging controls', 'ghost', 'fall', 'death', 'head', 'chest', 'abdomen', 'leg', 'washed', 'swapped', 'prop sword',
+             'real', 'knife', 'storage', 'memory card', 'fake blood', 'removed', 'accident', 'supervision']
     deductions = [
-        DeductionScreen("Victim was being drama queen in the {}", words, ["room center"]),
-        DeductionScreen("Victim was being drama queen in the {}", words, ["room center"]),
-        DeductionScreen("Victim was being drama queen in the {}", words, ["room center"]),
-
-
+        DeductionScreen("In the evening before grand rehearsal, {} {} asked {} {} to meet at the {} in secret to {} the {}. ", words,
+                        ['Carol', 'Reyes', 'Johannes', 'Meyer', 'theatre', 'practice', 'swordplay scene']),
+        DeductionScreen("Unknowingly, they were {} by {} {} who was at the {} to {}.", words,
+                        ['observed', 'Norman', 'Wagner', 'theatre', 'mope']),
+        DeductionScreen("{} {} recorded the scene on {}. To get better recording, they practiced in full costume and"
+                        "set up the props, including the big {}. They operated the {} despite being {} by {} {}.", words,
+                        ['Carol', 'Reyes', 'camera', 'chandelier', 'rigging controls', 'prohibited', 'Sam', 'Wright']),
+        DeductionScreen("During the {}, the {} of {} {} interfered with the {}, which caused the {} to {}. "
+                        "It struck {} {} in the {}, causing his {}.", words,
+                        ['practice', 'ghost', 'Daniel', 'Rider', 'rigging controls', 'chandelier', 'fall', 'Carol', 'Reyes', 'head', 'death']),
+        DeductionScreen("At that moment, {} {} ran to the {}. They confronted {} {}, altercation ensued, during which they drew {}."
+                        "They were hit by {} in the {}, and their opponent was struct by {} in the {}. ", words,
+                        ['Norman', 'Wagner', 'stage', 'Johannes', 'Meyer', 'knife', 'prop sword', 'chest', 'knife', 'abdomen']),
+        DeductionScreen("After that, they wanted to {} their deed. They {} the murder weapon, {} each {} for a {} one from the {},"
+                        " and placed {} on one to {} the change.", words,
+                        ["hide", 'washed', 'swapped', 'prop sword', 'real', 'storage', 'fake blood', 'hide']),
+        DeductionScreen("They also noticed the {}, shoved it aside, and {} the {}.", words,
+                        ['camera', 'removed', 'memory card']),
+        DeductionScreen("In the morning, {} {} discovered the bodies. At first, {} was suspected, because"
+                        " {} were handled without {}.", words,
+                        ['Sam', 'Wright', 'accident', 'rigging controls', 'supervision']),
+        DeductionScreen("Summary: First victim was {} {}. They were killed with {} by {} {}.", words,
+                        ['Carol', 'Reyes', 'chandelier', 'Daniel', 'Rider']),
+        DeductionScreen("Summary: Second victim was {} {}. They were killed with {} by {} {}.", words,
+                        ['Johannes', 'Meyer', 'knife', 'Norman', 'Wagner']),
+        DeductionScreen('Supernatural {} involved. {} {} was a {}.',
+                        ['-----', 'was', 'was not', 'The first', 'The second', 'killer', 'victim', 'poltergeist', 'normal human', 'phantom of the opera'],
+                        ['was', 'The first', 'killer', 'poltergeist'])
     ]
     build_deduction_links(deductions)
 
