@@ -9,7 +9,7 @@ class Game:
     screen: screen.Screen
 
     def __init__(self):
-        pyxel.init(SCREEN_W, SCREEN_H + KEYBOARD_H, fps=FPS, title="Nokia 3310 Jam 2025", display_scale=DISPLAY_SCALE)
+        pyxel.init(SCREEN_W, SCREEN_H + KEYBOARD_H, fps=FPS, title="Nokia 3310 Jam 2025", display_scale=DISPLAY_SCALE, quit_key=pyxel.KEY_NONE)
 
         pyxel.mouse(False)
         sound.init()
