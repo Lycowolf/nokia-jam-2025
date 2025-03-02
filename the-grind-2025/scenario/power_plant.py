@@ -200,7 +200,7 @@ def setup_scenario(skip_intro=False):
     inv_scr.exits[Way.up] = ConfirmationScreen(inv_scr, GameOverScreen(lift_death_text), "Use the lift?")
     del graph["lift crash"]
     inv_scr = graph["catwalks"]
-    inv_scr.exits[Way.down] = ConfirmationScreen(inv_scr, GameOverScreen(catwalks_death_text), "Go over the catwalks?")
+    inv_scr.exits[Way.down] = ConfirmationScreen(inv_scr, GameOverScreen(catwalks_death_text), "Walk on catwalks?")
     del graph["catwalks fall"]
 
     words = [

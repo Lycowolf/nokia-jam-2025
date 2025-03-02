@@ -82,12 +82,12 @@ def draw_progress(progress):
     for idx, (correct, big) in enumerate(progress):
         size = 3
         x = 5 + idx * (size + 2)
-        y = SCREEN_H - 5
+        y = SCREEN_H - 3
 
         if big:
             x -= 1
             y -= 1
-            size += 2
+            size += 1
 
         if correct:
             pyxel.rect(x, y, size, size, col=FOREGROUND)

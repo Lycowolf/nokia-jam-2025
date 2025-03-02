@@ -1,5 +1,5 @@
 import pyxel
-from ui import draw_wrapped_text, draw_text_row
+from ui import draw_wrapped_text, draw_text_row, draw_text_coords
 from input import btnp as pressed, Map
 from .base import Screen
 from constants import *
@@ -13,7 +13,7 @@ class StoryScreen(Screen):
     def draw(self):
         pyxel.cls(BACKGROUND)
         draw_wrapped_text(self.text, 0)
-        draw_text_row(6, "..." if self.more else ">>", x_off=-3)
+        draw_text_coords(-1, -1, "..." if self.more else "→→")
 
     def update(self):
         if pressed(Map.action):

@@ -40,10 +40,12 @@ class ConfirmationScreen(Screen):
 
         x = (SCREEN_W - text_w) // 2 - 2
         y = 2 * FONT_HEIGHT + TEXT_OFFSET_Y - 2
-        w = text_w + 4
-        h = 3 * FONT_HEIGHT + TEXT_OFFSET_Y
+        w = text_w + 4 - 1 - 1 # glyphs have a 1px between-letter-space on the right side
+        if w < SCREEN_W // 2:
+            w = SCREEN_W // 2
+        h = 3 * FONT_HEIGHT + TEXT_OFFSET_Y + 1
 
-        pyxel.rect(x, y, w, h, col=BACKGROUND)
+        pyxel.rect(x-1, y-1, w+3, h+3, col=BACKGROUND)
         pyxel.line(x+1, y, x+w-1, y, col=FOREGROUND)
         pyxel.line(x + 1, y+h, x + w - 1, y+h, col=FOREGROUND)
         pyxel.line(x, y+1, x, y+h-1, col=FOREGROUND)
@@ -52,4 +54,4 @@ class ConfirmationScreen(Screen):
         draw_text_row(2, self.text, x_off=x + 2)
         draw_text_row(3, "Yes", x_off=30)
         draw_text_row(4, "No", x_off=30)
-        draw_text_row(3 + self.current, ">", x_off=25)
+        draw_text_row(3 + self.current, "→", x_off=25)

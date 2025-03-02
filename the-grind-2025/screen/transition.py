@@ -98,7 +98,7 @@ class Transition(Screen):
         if phase > font.text_width(self.label) // 2:
             text_width = font.text_width(self.label) - 1
             x_offset = (SCREEN_W-text_width)//2
-            line_y = 3*FONT_HEIGHT, 4*FONT_HEIGHT + 4
+            line_y = 3 * FONT_HEIGHT + TEXT_OFFSET_Y - 3, 4 * FONT_HEIGHT + TEXT_OFFSET_Y + 2
 
             draw_text_row(3, self.label, color=BACKGROUND, x_off=x_offset)
             pyxel.line(x_offset, line_y[0], x_offset + text_width , line_y[0], col=BACKGROUND)

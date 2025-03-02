@@ -18,7 +18,8 @@ FONT_INVERTED_OFFSET = 0xE000
 # half a line at the top and the bottom is reserved for UI
 TEXT_ROWS = SCREEN_H // FONT_HEIGHT - 1
 MIDDLE_ROW = math.floor(TEXT_ROWS / 2)
-TEXT_OFFSET_Y = FONT_HEIGHT // 2
+#TEXT_OFFSET_Y = FONT_HEIGHT // 2
+TEXT_OFFSET_Y = 1
 
 SMART_TEXT_MARKER = "{}"
 # NEWLINE_MARKER = "\n[ \t]*\n[ \t]*" # eat whitespace after newline, to enable using indented multiline strings

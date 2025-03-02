@@ -13,6 +13,14 @@ def switch_palette(name: str) -> None:
         # load only palette; the pyxel python binding exposes wrong type
         pyxel.load(f"assets/palettes/{name}.pyxres", excl_images=True, excl_musics=True, excl_sounds=True, excl_tilemaps=True)
 
+def draw_text_coords(x, y, text, color=FOREGROUND):
+    text_w = font.text_width(text)
+    if x < 0:
+        x = SCREEN_W - text_w + x - 1 # -1 means "sits flush at the edge"
+    if y < 0:
+        y = SCREEN_H - FONT_HEIGHT + y - 1
+    pyxel.text(x, y, text, color, font)
+
 def draw_text_row(row: int, text: str, color: int = FOREGROUND, x_off: int = 0) -> None:
     """
     Text-printing primitive: prints a line of text to a specified screen row.
