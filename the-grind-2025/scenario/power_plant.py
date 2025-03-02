@@ -1,7 +1,15 @@
+from typing import Self
+
+import pyxel
+
 import game_state
-from screen import InvestigationScreen, StoryScreen, DeductionScreen
+import ui
+from constants import BACKGROUND, MIDDLE_ROW
+from screen import InvestigationScreen, StoryScreen, DeductionScreen, DeductionEndScreen, SmartText, Victory, Screen
+from screen.game_over import GameOverScreen
 from screen.transition import Transition
 from .tools import build_scenario_graph, build_deduction_links
+from misc_types import Way
 
 """
 Spoilers:
@@ -29,6 +37,11 @@ Hints Emily:
 - the body has a bruise at the back of the head
 - Mark did prank her recently
 """
+
+game_over_text = "You fall to your death\nKillian's ghost laughs"
+lift_death_text = "The lift cable snaps\nEmergency brakes fail\n" + game_over_text
+dam_death_text = "You walk over the dam\nA strong wind gust blows\n" + game_over_text
+catwalks_death_text = "The iron structure breaks\nThe floor gives out\n" + game_over_text
 
 def setup_scenario(skip_intro=False):
     screens = [
@@ -65,9 +78,7 @@ def setup_scenario(skip_intro=False):
                             down="generator room", up="lift crash",
                             objects=[("Phone", "You received an SMS:\n\n>>DON'T GO. DANGER.")]
                             ),
-        InvestigationScreen('lift crash',
-                            "Several meters from the surface, the cable suddenly snaps. The emergency brakes screech and fail, one after another. You die. GAME OVER",
-                            ),
+        InvestigationScreen('lift crash', lift_death_text),
         InvestigationScreen('generator room',
                             "Several employees fidget around four generators. A body is spread over one of them. Catwalks ↓ high above. A lift ↑ goes to the dam.",
                             down="catwalks", right="body", up="lift investigation", left="control room",
@@ -97,7 +108,7 @@ def setup_scenario(skip_intro=False):
                                 ('Victor', """A man in his twenties, sweaty and pale as death, wearing big earmuffs, looks you into the eyes.
                                 
                                 "Hi. I worked above, on the catwalks throughout the day, inspecting the ceiling and walls for cracks. 
-                                When I climbed down to have a rest, I saw Mark there, dead, and immediately alerted everybody.
+                                When I climbed down to clean up before going home, I saw Mark there, dead, and immediately alerted everybody.
                                 
                                 No, I didn't hear anything odd, just the noise of our machines. I saw Emily talking to Victor several times,
                                 waving hands, but that's just the part of our job. Also Sam, he was shouting at Mark 
@@ -113,7 +124,7 @@ def setup_scenario(skip_intro=False):
                                                     "him in and smashing his head, hard against the steel. You have "
                                                     "no clue why would the machine started when he was working on it."),
                                 ("Head", "There's a big head wound on his forehead, caused by smashing it against something hard. "
-                                         "On the back, a clump of hairs was torn out."),
+                                         "There's a bruise on the back and some hair is missing there."),
                                 ("Shirt", "It's wrapped around the steel shaft, but it's a little loose."),
                             ]),
         InvestigationScreen('catwalks',
@@ -122,9 +133,7 @@ def setup_scenario(skip_intro=False):
                             objects=[
                                 ("Phone", "You received an SMS:\n\n>Important clue's ahead.<"),
                             ]),
-        InvestigationScreen('catwalks fall',
-                            "Suddenly you hear a loud snap, the floor gives out and you fall to your death. GAME OVER",
-                            ),
+        InvestigationScreen('catwalks fall', catwalks_death_text),
         InvestigationScreen('control room',
                             "A control room. You can see most of what's happening in the generator room. Two men are waiting. Manager office is ↓.",
                             right="generator room", down="office",
@@ -167,23 +176,98 @@ def setup_scenario(skip_intro=False):
                                 
                                 She looks sincerely saddened."""),
                             ]),
-        # TODO: letter about Killian killing himself
         InvestigationScreen('office',
-                            "XXX",
+                            "The plant manager's office. There are several documents lying on the desk.",
                             up="control room",
                             objects=[
-
+                                ("Exits", "The only exit is the door you came in. There are no windows, "
+                                          "only artificial lighting. How do people work here all day without going loopy?"),
+                                ("Report from Samuel", "A report on Mark's performance. It points out his easygoing attitude, "
+                                                    "but rates him \"satisfactory\" anyway."),
+                                ("Work assignments", """Emily: routine maintenance of generator 3
+                                
+                                                    Mark: preparations for the planned grid load tests
+                                
+                                                    Samuel: foreman duties (check on him before shift end)
+                                
+                                                    Victor: inspection of generator room ceiling"""),
+                                ("Letter from prison", """A notice from state prison. Killian Gill won't be returning
+                                                       to work because he's commited suicide. 
+                                                       
+                                                       They ask if he's been a member of a gang or a cult, shouldn't 
+                                                       they ask that before he's dead?""")
                             ]),
 
     ]
     graph = build_scenario_graph(screens)
+    # HACK: replace death scenarios with confirmations
+    inv_scr = graph["lift investigation"]
+    from screen import ConfirmationScreen
+    inv_scr.exits[Way.up] = ConfirmationScreen(inv_scr, GameOverScreen(lift_death_text), "Use the lift?")
+    del graph["lift crash"]
+    inv_scr = graph["catwalks"]
+    inv_scr.exits[Way.up] = ConfirmationScreen(inv_scr, GameOverScreen(catwalks_death_text), "Go over the catwalks?")
+    del graph["catwalks fall"]
 
     words = [
-        "-----",
+        "-----", "Emily", "Victor", "Samuel", "Mark", "the manager", "a ghost", "generator cover", "generator shaft",
+        "head", "an accident", "did", "didn't", "generator 3", "generator 4", "the murderer",
+        "ceiling inspection", "foreman duties", "grid tests", "looking away", "asleep", "beginning", "middle", "end",
+        "was careless", "angered her", "angered him", "murdered", "smashed", "safe", "dangerous"
     ]
+
+    # this must correspond with the content of `deductions` and the DeductionEndScreen.
+    def select_end_screen(text: SmartText):
+        decision = text.words[0]
+        if text.words[0] != "-----":
+            if decision == "stay and call help":
+                solved = True
+                for i in range(len(deductions) - 1):
+                    if not deductions[i].solved:
+                        solved = False
+                if solved:
+                    return Victory()
+                else:
+                    return GotAway()
+            elif decision == "leave alone":
+                return GameOverScreen(dam_death_text)
+            elif decision == "leave with others":
+                return GameOverScreen(lift_death_text)
+        return deductions[-1]
+
     deductions = [
-        DeductionScreen("{} {}, the victim, {} to {} in a haunted mansion through the {}.", words,
-                        ["Keith", "Fowler", "made a bet", "stay", "night"]),
+        DeductionScreen("""Throughout the day:
+        
+                                    The manager was working on administrative work. She didn't notice 
+                                    Mark's death because she was isolated.
+                                    
+                                    Mark was working on {}. He died around the {} of the work day.
+        
+                                    Emily was working on {}. She {} notice Mark's death because she was {}.
+                                    
+                                    Victor was working on {}. He {} notice Mark's death because he was {}.
+                                    
+                                    Samuel was working on {}. He {} notice Mark's death because he was {}.""", words,
+                        [
+                            "grid tests", "end", "generator 3", "did", "the murderer", "ceiling inspection",
+                            "looking away", "foreman duties", "didn't", "asleep"
+                         ]),
+        DeductionScreen("Mark was {} when his {} was caught by {} that {} his head against "
+                        "the {} because he {}.", words,
+                        # herring: an accident, his shirt, gen. shaft, smashed, gen. shaft, was careless
+                        ["murdered", "head", "Emily", "smashed", "generator cover", "angered her"]),
+        DeductionScreen("""Your phone beeps. You received an SMS:
+        
+                        >>Think carefully.
+        
+                        Supernatural events {} happen during my investigation. I received SMSes from {} on my phone.""",
+                        ["-----", "did", "didn't", "Killian's ghost", "Justin's ghost", "two ghosts", "a prankster", "an unknown ghost"],
+                        ["did", "two ghosts"]),
+        DeductionEndScreen(""">You should hurry.<
+                        
+                        I will {}""",
+                        ["-----", "leave alone", "leave with others", "stay and call help"],
+                        select_end_screen)
     ]
     build_deduction_links(deductions)
 
@@ -202,3 +286,11 @@ def setup_scenario(skip_intro=False):
         return graph['entry']
     else:
         return intro
+
+class GotAway(Screen):
+    def update(self) -> Self:
+        return self
+    def draw(self):
+        pyxel.cls(BACKGROUND)
+        ui.draw_centered_text_row(MIDDLE_ROW - 1, "CASE UNSOLVED")
+        ui.draw_centered_text_row(MIDDLE_ROW + 1, "you are safe")

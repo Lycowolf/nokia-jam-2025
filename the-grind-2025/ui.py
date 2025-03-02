@@ -13,7 +13,7 @@ def switch_palette(name: str) -> None:
         # load only palette; the pyxel python binding exposes wrong type
         pyxel.load(f"assets/palettes/{name}.pyxres", excl_images=True, excl_musics=True, excl_sounds=True, excl_tilemaps=True)
 
-def draw_text_row(row, text: str, color: int = FOREGROUND, x_off: int = 0) -> None:
+def draw_text_row(row: int, text: str, color: int = FOREGROUND, x_off: int = 0) -> None:
     """
     Text-printing primitive: prints a line of text to a specified screen row.
     Rows outside the allowed area are ignored.
@@ -25,6 +25,10 @@ def draw_text_row(row, text: str, color: int = FOREGROUND, x_off: int = 0) -> No
 
     if 0 <= row < TEXT_ROWS:
         pyxel.text(x_off, row * FONT_HEIGHT + TEXT_OFFSET_Y, text, color, font)
+
+def draw_centered_text_row(row: int, text: str, color: int = FOREGROUND):
+    offset = (SCREEN_W - font.text_width(text)) // 2
+    draw_text_row(row, text, color, offset)
 
 def draw_wrapped_text(text: str, starting_line: int = 0):
     row_num = - starting_line

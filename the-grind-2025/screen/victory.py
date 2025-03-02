@@ -9,4 +9,4 @@ class Victory(Screen):
 
     def draw(self):
         pyxel.cls(BACKGROUND)
-        ui.draw_text_row(MIDDLE_ROW, "    You win!", FOREGROUND)
+        ui.draw_centered_text_row(MIDDLE_ROW, "CASE SOLVED", FOREGROUND)
