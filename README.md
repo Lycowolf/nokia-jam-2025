@@ -1,3 +1,3 @@
-Tests and preparation for https://itch.io/jam/nokiajam7
+Source code for Number Not Available: our submission to the https://itch.io/jam/nokiajam7
 
-Project name: Ghastly Grind
+The repo contains experimental builds for Linux and Windows. These are *not* guaranteed to work.
