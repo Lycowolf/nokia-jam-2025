@@ -1,8 +1,4 @@
 import pyxel
-from collections import namedtuple
-
-from pyxel.pyxel_wrapper import mouse
-
 from constants import SCREEN_H
 from misc_types import Way
 

@@ -1,5 +1,4 @@
 import pyxel
-import ui
 from input import Map, btnp
 from constants import *
 from .transition import Transition

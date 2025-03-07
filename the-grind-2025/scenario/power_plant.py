@@ -34,7 +34,7 @@ Hints Emily:
 
 game_over_text = "You fall to your death\nKillian's ghost laughs"
 lift_death_text = "The lift cable snaps\nEmergency brakes fail\n" + game_over_text
-dam_death_text = "You walk over the dam\nA strong wind gust blows\n" + game_over_text
+dam_death_text = "You walk over the dam\nStrong wind gust blows\n" + game_over_text
 catwalks_death_text = "Iron structure breaks\nThe floor gives out\n" + game_over_text
 
 def setup_scenario(skip_intro=False):
@@ -87,9 +87,9 @@ def setup_scenario(skip_intro=False):
                                                Generator 4 is scratched and dented everywhere, still awaiting its new coat of paint."""),
 
                                 ('Body',
-                                 "A body lies next to the generator 3, next to an open cover. You can't see much detail from over here."),
+                                 "A body lies on the generator 3, next to an open cover. You can't see much detail from over here."),
 
-                                ('Emily', """A wide-eyed, pale woman in her thirties stares at you, her hands shaking. She wears 
+                                ('Emily', """A big, wide-eyed, pale woman in her thirties stares at you, her hands shaking. She wears 
                                 big earmuffs on her head. 
                                 
                                 "Hello Mr. Detective. I was doing the routine checks and measurements on the generator 4, when Victor came to me
@@ -99,7 +99,7 @@ def setup_scenario(skip_intro=False):
                                 
                                 She points at a wheeled rack full of test equipment nearby."""),
 
-                                ('Victor', """A man in his twenties, sweaty and pale as death, wearing big earmuffs, looks you into the eyes.
+                                ('Victor', """A wiry man in his twenties, sweaty and pale as death, wearing big earmuffs, looks you into the eyes.
                                 
                                 "Hi. I worked above, on the catwalks throughout the day, inspecting the ceiling and walls for cracks. 
                                 When I climbed down to clean up before going home, I saw Mark there, dead, and immediately alerted everybody.
@@ -111,7 +111,7 @@ def setup_scenario(skip_intro=False):
                                 He looks like he's fighting a panic attack."""),
                             ]),
         InvestigationScreen('body',
-                            "The body of Mark lies on an generator, his shirt wrapped around an uncovered shaft. There's blood on his face.",
+                            "The body of Mark lies on an generator 3 uncovered shaft, his shirt wrapped around an uncovered shaft. There's blood on his face.",
                             left="generator room",
                             objects=[
                                 ("Generator shaft", "It looks like his shirt was caught on the spinning shaft, pulling "
@@ -129,7 +129,7 @@ def setup_scenario(skip_intro=False):
                             ]),
         InvestigationScreen('catwalks fall', catwalks_death_text),
         InvestigationScreen('control room',
-                            "A control room. You can see most of what's happening in the generator room. Two men are waiting. Manager office is ↓.",
+                            "A control room. You can see most of what's happening in the generator room. Two people are waiting. Manager office is ↓.",
                             right="generator room", down="office",
                             objects=[
                                 ("Samuel", """A large man at least fifty years old looks at you through thick glasses, his shirt
@@ -140,9 +140,9 @@ def setup_scenario(skip_intro=False):
                                 I was working from the control room most of the time, but I went to the generator 
                                 room several times to solve problems.
 
-                                Yes, I had an argument with Victor, but I assure you, it was strictly professional.
+                                Yes, I had an argument with Mark, but I assure you, it was strictly professional.
                                  
-                                I believe what happened was an accident, Victor was a little easygoing with the safety rules.
+                                I believe what happened was an accident, Mark was a little easygoing with the safety rules.
                                 Yes, that's why I shouted at him. Tragically, it seems he didn't listen to me.
 
                                 Why I didn't saw it happen? Well," he leans closer and whispers: "I fell asleep near the end
@@ -158,12 +158,12 @@ def setup_scenario(skip_intro=False):
                                 "Mr. Ericsson, the providence itself brought you here. I am really glad to see you, 
                                 no matter why you are here. Do you have any progress yet? Can you eliminate any foul play?  
                                 
-                                Victor was quite popular with his coworkers, mainly for his practical jokes. Last time, 
+                                Mark was quite popular with his coworkers, mainly for his practical jokes. Last time, 
                                 he called Emily and convinced her the following day is an holiday. She learned it around 
                                 noon and had to rush here in her pyjamas. I haven't seen anyone so red in my whole life."
                                 
                                 She smiles at the memory. "No, mr. detective, everyone was target of his jokes and we
-                                all took it in good spirits. I don't believe anyone would kill Victor because a joke.
+                                all took it in good spirits. I don't believe anyone would kill Mark because a joke.
                                 
                                 I can't give you any useful information, I worked in my office, I am sorry. Please ask
                                 my subordinates, they will surely help you."
@@ -205,9 +205,9 @@ def setup_scenario(skip_intro=False):
 
     words = [
         "-----", "Emily", "Victor", "Samuel", "Mark", "the manager", "a ghost", "generator cover", "generator shaft",
-        "head", "an accident", "did", "didn't", "generator 3", "generator 4", "the murderer",
+        "head", "an accident", "murder", "did", "didn't", "generator 3", "generator 4", "the murderer",
         "ceiling inspection", "foreman duties", "grid tests", "looking away", "asleep", "beginning", "middle", "end",
-        "was careless", "angered her", "angered him", "murdered", "smashed", "safe", "dangerous"
+        "was careless", "angered her", "angered him", "smashed", "shirt"
     ]
 
     # this must correspond with the content of `deductions` and the DeductionEndScreen.
@@ -246,10 +246,10 @@ def setup_scenario(skip_intro=False):
                             "grid tests", "end", "generator 3", "did", "the murderer", "ceiling inspection",
                             "didn't", "looking away", "foreman duties", "didn't", "asleep"
                          ]),
-        DeductionScreen("Mark was {}: his {} was caught by {} that {} his head against "
+        DeductionScreen("Mark's death was {}: his {} was caught by {} that {} his head against "
                         "the {} because he {}.", words,
                         # herring: an accident, his shirt, gen. shaft, smashed, gen. shaft, was careless
-                        ["murdered", "head", "Emily", "smashed", "generator cover", "angered her"]),
+                        ["murder", "head", "Emily", "smashed", "generator cover", "angered her"]),
         DeductionScreen("""Your phone beeps. You received an SMS:
         
                         >>Think carefully.

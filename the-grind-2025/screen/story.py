@@ -1,5 +1,5 @@
 import pyxel
-from ui import draw_wrapped_text, draw_text_row, draw_text_coords
+from ui import draw_wrapped_text, draw_text_coords
 from input import btnp as pressed, Map
 from .base import Screen
 from constants import *
